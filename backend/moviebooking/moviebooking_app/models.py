@@ -1,4 +1,6 @@
-from django.db import models
+# from django.db import models
+import uuid
+from djongo import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 # Create your models here.
 
@@ -16,7 +18,6 @@ class UserManager(BaseUserManager):
         return self.create_user(username, password, **extra_fields)
     
 class User(AbstractBaseUser, PermissionsMixin):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=60)
     username = models.CharField(max_length=100, unique=True)
@@ -40,13 +41,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 #for admin    
 class Movie(models.Model):
     title = models.CharField(max_length=250)
-    director = models.CharField(max_length=250)
+    description = models.TextField()
     genre = models.CharField(max_length=250)
     language = models.CharField(max_length=250)
     rating = models.CharField(max_length=10)
     image = models.TextField()
-    movie_length = models.IntegerField
-    
+    movie_length = models.IntegerField()
+
     def __str__(self):
         return self.title
 #for admin    
@@ -56,7 +57,7 @@ class Theater(models.Model):
     address = models.CharField(max_length=250)
     city = models.CharField(max_length=250)
     pincode = models.CharField(max_length=10)
-    movie_timing = models.DateField()
+    movie_timing = models.DateTimeField()
     
     def __str__(self):
         return self.name

@@ -2,6 +2,11 @@ from rest_framework import serializers
 from .models import *
 from django.contrib.auth import authenticate
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'name', 'email', 'username', 'is_active', 'is_staff', 'is_superuser']
+        
 class SignUpSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     class Meta:
@@ -26,4 +31,20 @@ class LoginSerializer(serializers.Serializer):
         user = authenticate(**data)
         if user and user.is_active:
             return user
-        return serializers.ValidationError("Invalid username or password")
+        raise serializers.ValidationError("Invalid username or password")
+    
+class MovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = "__all__"
+
+class TheaterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Theater
+        fields = "__all__"
+
+class SeatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Seat
+        fields = "__all__"
+    
