@@ -1,6 +1,4 @@
-# from django.db import models
-import uuid
-from djongo import models
+from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 # Create your models here.
 
@@ -40,6 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 #for admin    
 class Movie(models.Model):
+    category= models.CharField(max_length=250)
     title = models.CharField(max_length=250)
     description = models.TextField()
     genre = models.CharField(max_length=250)
@@ -73,11 +72,23 @@ class Seat(models.Model):
     def __str__(self):
         return f"{self.theater.name} - {self.movie.title} -  Seat {self.seat_no}"
     
+class Ticket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    seat = models.ForeignKey(Seat, on_delete=models.CASCADE)
+    category = models.CharField(max_length=250)
+    price = models.FloatField(default=0.00)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Ticket for {self.movie.title} - Seat {self.seat.seat_no}"
+    
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     seats = models.ManyToManyField(Seat)
     total_cost = models.FloatField(default=0.00)
+    created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return f"{self.user.username} - {self.movie.title}"

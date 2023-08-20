@@ -1,5 +1,6 @@
 from .models import *
 from .serializers import *
+from django.db.models import Sum
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from rest_framework import status
@@ -160,18 +161,182 @@ class TheaterView(APIView):
         serializer = TheaterSerializer(theater_list, many=True).data
         return JsonResponse(serializer, safe=False, status=status.HTTP_200_OK)
     
+class TheatersMovieView(APIView):
+    def get(self,req, movie_id):
+        allTheaters = Theater.objects.filter(movie=movie_id)
+        serializer = TheaterSerializer(allTheaters, many=True)
+        return JsonResponse(serializer.data,safe=False, status=status.HTTP_200_OK)
+
+# Fetch all the seats of a specific theater and movie
+class SeatsTheaterMovieView(APIView):
+    def post(self, req):
+        data = req.data
+        allSeats = Seat.objects.filter(theater=data['theater_id'], movie=data['movie_id'])
+        serializer = SeatSerializer(allSeats, many=True)
+        return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)    
+    
 
 class SeatView(APIView):
+    permission_classes = [IsAdminUser]
     #Fetch all seats for a specific movie
     def get(self, req, movie_id):      
         seats = Seat.objects.filter(movie = movie_id)
         serializer = SeatSerializer(seats, many=True)
         return JsonResponse(serializer.data, safe=False)
     
-    # def get(self, req):
-    #     seats = Seat.objects.all()
-    #     serializer = SeatSerializer(seats, many=True)
-    #     return JsonResponse(serializer.data, safe=False)
+    # Reserve a seat
+    def post(self, req):
+        data = req.data
         
+        # Check if the required fields are present in the request data
+        required_fields = ["theater_id", "movie_id", "seat_no"]
+        for field in required_fields:
+            if field not in data:
+                return JsonResponse({"message": f"'{field}' is required"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            seat = Seat.objects.get(theater=data["theater_id"], movie=data["movie_id"], seat_no=data["seat_no"])
+            
+            if seat.is_reserved:
+                return JsonResponse({"message": "Seat is already reserved"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Set the seat as reserved and save the changes
+            seat.is_reserved = True
+            seat.save()
+            
+            serializer = SeatSerializer(seat)
+            return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+        
+        except Seat.DoesNotExist:
+            return JsonResponse({"message": "Seat not found"}, status=status.HTTP_404_NOT_FOUND)
+         
+    # update seat reservation   
+    def put(self, req, seat_id):
+        
+        try:
+            seat = Seat.objects.get(id=seat_id)
+            
+            # Check if the seat is reserved
+            if not seat.is_reserved:
+                return JsonResponse({"message": "Seat is not reserved"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # Toggle the seat reservation status and save the changes
+            seat.is_reserved = not seat.is_reserved
+            seat.save()
+            
+            serializer = SeatSerializer(seat)
+            return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+        
+        except Seat.DoesNotExist:
+            return JsonResponse({"message": "Seat not found"}, status=status.HTTP_404_NOT_FOUND)
+
+class SeatAdminView(APIView):
+    permission_classes = [IsAdminUser]
+    
+    def post(self, req):
+        data = req.data
+        serializer = SeatSerializer(data = data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, safe=False, status=status.HTTP_201_CREATED) 
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
+    
+    def put(self, req, id=None):
+        try:
+            selected_seat = Seat.objects.get(id=id)
+        except Seat.DoesNotExist:
+            return JsonResponse({'message':'Seat not found'}, safe=False, status=status.HTTP_404_NOT_FOUND)  
+        
+        serializer = SeatSerializer(selected_seat, data=req.data) 
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
+        return JsonResponse(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, req, id=None):
+        try:
+            selected_seat = Seat.objects.get(id=id)
+            selected_seat.delete()
+        except Seat.DoesNotExist:
+             return JsonResponse({'message':'Seat not found'}, safe=False, status=status.HTTP_404_NOT_FOUND) 
+
+
+class TicketView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, req):
+        user = req.user
+        booked_tickets = Ticket.objects.filter(user=user)
+        serializer = TicketSerializer(booked_tickets, many=True)
+        return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, req):
+        data = req.data
+        
+        movie = data.get("movie")
+        seat = data.get("seat")
+        category = data.get("category")
+        price = data.get("price")
+
+        if not all([movie, seat, category, price]):
+            return JsonResponse({"message": "Incomplete ticket data"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        data['user']= req.user.id
+        serializer = TicketSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, safe=False, status=status.HTTP_400_BAD_REQUEST)
+                
+
+class BookingView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    #If a booking_id is provided, it retrieves details for a specific booking. If no booking_id is provided, it retrieves a list of bookings related to the logged-in user
+    def get(self, req, booking_id=None):
+        if booking_id:
+            try:
+                booking = Booking.objects.get(user=req.user.id, id=booking_id)
+                serializer = BookingSerializer(booking)
+                return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+            except Booking.DoesNotExist:
+                return JsonResponse({'message': 'Booking not found'}, status=status.HTTP_404_NOT_FOUND)
+        bookings = Booking.objects.filter(user=req.user.id).select_related('movie')
+        serializer = BookingSerializer(bookings, many=True)
+        return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+           
+    def post(self, req):
+        data = req.data
+
+        # Assuming 'seats' is a list of seat IDs selected for booking
+        seats = data.get('seats', [])
+
+        # Check if the selected seats are available and not already reserved
+        selected_seats = Seat.objects.filter(id__in=seats)
+        is_reserved_seats = selected_seats.filter(is_reserved__in = [True]).exists()
+        if is_reserved_seats:
+            return JsonResponse({'message':'Some seats are already reserved.'}, safe=False, status=status.HTTP_400_BAD_REQUEST)
+        
+        data['user'] = req.user.id
+        total_price = selected_seats.aggregate(sum = Sum('price'))['sum']# Calculate total cost based on selected seats' prices
+        data['total_price'] = total_price
+        
+        serializer = BookingSerializer(data = data)
+        if serializer.is_valid():
+            serializer.save()
+            Seat.objects.filter(id__in=seats).update(is_reserved=True)
+            return JsonResponse(serializer.data, safe=False, status=status.HTTP_201_CREATED)            
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    def delete(self, req, booking_id):
+        try:
+            booking = Booking.objects.get(id = booking_id, user=req.user.id)
+            reserved_seats = booking.seats.values_list('id', flat=True)
+            Seat.objects.filter(id__in=list(reserved_seats)).update(is_reserved=False)
+            booking.delete()
+            return JsonResponse({'message': 'Booking has been cancelled'},safe=False, status=status.HTTP_200_OK)
+        except Booking.DoesNotExist:
+            return JsonResponse({'message': 'Booking does not exist'}, safe=False, status=status.HTTP_404_NOT_FOUND)  
         
         
