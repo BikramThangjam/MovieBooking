@@ -14,6 +14,7 @@ urlpatterns = [
     path('movies/update/<int:id>/', MovieViewAdmin.as_view(), name='update-movie-admin-only'),
     path('movies/delete/<int:id>/', MovieViewAdmin.as_view(), name='delete-movie-admin-only'),
     path('movies/filters/', MoviesFilterView.as_view(), name='filter-movies-by-genre-lan-city-rating'),
+    path('movies/filters/byCategory/', MoviesFilterByCategory.as_view(), name='filter-movies-by-category'),
     
     path('theater/add/', TheaterView.as_view(), name='add-theater'),
     path('theater/all/', TheaterView.as_view(), name='list-theater'),

@@ -75,7 +75,7 @@ class MovieViews(APIView):
         serializer = MovieSerializer(movies_pages, many=True)
         return JsonResponse({
             "total_pages": paginator.num_pages,
-            "total_products": movies.count(),
+            "total_movies": movies.count(),
             "current_page": page.number,
             "data": serializer.data,
         }, safe=False, status=status.HTTP_200_OK)
@@ -142,7 +142,26 @@ class MoviesFilterView(APIView):
         
         serializer = MovieSerializer(movies, many=True)
         return JsonResponse(serializer.data, safe=False)
-                
+
+class MoviesFilterByCategory(APIView):
+    def get(self, req):
+        cat = req.GET.get('cat')
+        page_no = req.GET.get('page', 1)
+        
+        movies = Movie.objects.filter(category__icontains=cat)
+        
+        paginator = Paginator(movies, 10)
+        page = paginator.get_page(page_no)
+        movies_pages = page.object_list
+        
+        
+        serializer = MovieSerializer(movies_pages, many=True)
+        return JsonResponse({
+            "total_pages": paginator.num_pages,
+            "total_movies": movies.count(),
+            "current_page": page.number,
+            "data": serializer.data,
+        }, safe=False, status=status.HTTP_200_OK)              
 
 class TheaterView(APIView):
     def post(self, req):
