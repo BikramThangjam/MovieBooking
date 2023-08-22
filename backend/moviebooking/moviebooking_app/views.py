@@ -63,10 +63,10 @@ class UserProfileView(APIView):
         user.delete()
         return JsonResponse({"message": "User deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
 
-class MovieViews(APIView):
+class MoviesView(APIView):
     def get(self, req):
         page_number = req.GET.get("page", 1)
-        movies = Movie.objects.all()
+        movies = Movie.objects.all().order_by('id')
         
         paginator = Paginator(movies, 10)
         page = paginator.get_page(page_number)
@@ -79,47 +79,7 @@ class MovieViews(APIView):
             "current_page": page.number,
             "data": serializer.data,
         }, safe=False, status=status.HTTP_200_OK)
-
-class MovieViewAdmin(APIView):
-    permission_classes = [IsAdminUser]
         
-    def post(self, req):
-        data = req.data 
-        serializer = MovieSerializer(data=data)
-        
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse({
-                "message": "Movie added",
-                "data": serializer.data
-            }, safe=False, status=status.HTTP_201_CREATED)
-        
-        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def put(self, request, id):
-        try:
-            movie = Movie.objects.get(id=id)
-        except Movie.DoesNotExist:
-            return JsonResponse({"message": "Movie not found."}, status=status.HTTP_404_NOT_FOUND)
-
-        # Deserialize request data using MovieSerializer
-        serializer = MovieSerializer(movie, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse({"message": "Movie updated successfully.", "data": serializer.data}, status=status.HTTP_200_OK)
-
-        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def delete(self, req, id):
-        try:
-            movie = Movie.objects.get(id=id)
-        except Movie.DoesNotExist:
-            return JsonResponse({"message":"Movie not found"}, status=status.HTTP_404_NOT_FOUND)
-        
-        movie.delete()
-        return JsonResponse({"message": "Movie deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
-    
 class MoviesFilterView(APIView):
     def get(self, req):
         genre = req.GET.get('genre',None)
@@ -162,6 +122,64 @@ class MoviesFilterByCategory(APIView):
             "current_page": page.number,
             "data": serializer.data,
         }, safe=False, status=status.HTTP_200_OK)              
+
+class MoviesFilterByTitle(APIView):
+    def get(self, req):
+        title = req.GET.get('title')
+        movies = Movie.objects.filter(title__icontains = title)
+        serializer = MovieSerializer(movies, many=True)
+        return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
+    
+class MovieDetailsView(APIView):
+    def get(self, req, movie_id):
+        try:
+            movie = Movie.objects.get(id = movie_id)
+            serializer = MovieSerializer(movie)
+            return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
+        except Movie.DoesNotExist:
+            return JsonResponse({"message":"Movie not found"}, status=status.HTTP_404_NOT_FOUND)
+            
+
+class MovieViewAdmin(APIView):
+    permission_classes = [IsAdminUser]
+        
+    def post(self, req):
+        data = req.data 
+        serializer = MovieSerializer(data=data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({
+                "message": "Movie added",
+                "data": serializer.data
+            }, safe=False, status=status.HTTP_201_CREATED)
+        
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, id):
+        try:
+            movie = Movie.objects.get(id=id)
+        except Movie.DoesNotExist:
+            return JsonResponse({"message": "Movie not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Deserialize request data using MovieSerializer
+        serializer = MovieSerializer(movie, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({"message": "Movie updated successfully.", "data": serializer.data}, status=status.HTTP_200_OK)
+
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, req, id):
+        try:
+            movie = Movie.objects.get(id=id)
+        except Movie.DoesNotExist:
+            return JsonResponse({"message":"Movie not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        movie.delete()
+        return JsonResponse({"message": "Movie deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+    
 
 class TheaterView(APIView):
     def post(self, req):
@@ -287,42 +305,49 @@ class TicketView(APIView):
         user = req.user
         booked_tickets = Ticket.objects.filter(user=user)
         serializer = TicketSerializer(booked_tickets, many=True)
-        return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+        return JsonResponse(serializer.data,safe=False, status=status.HTTP_200_OK)
 
     def post(self, req):
         data = req.data
         
         movie = data.get("movie")
         seat = data.get("seat")
-        category = data.get("category")
-        price = data.get("price")
+        # category = data.get("category")
+        # price = data.get("price")
 
-        if not all([movie, seat, category, price]):
-            return JsonResponse({"message": "Incomplete ticket data"}, status=status.HTTP_400_BAD_REQUEST)
+        if not all([movie, seat]):
+            return JsonResponse({"message": "Incomplete ticket data"}, safe=False, status=status.HTTP_400_BAD_REQUEST)
         
+        selected_seat = Seat.objects.filter(id = seat)[0]
+        print("selected_seat---",selected_seat)
         data['user']= req.user.id
+        data['category'] = selected_seat.category
+        data['price'] = selected_seat.price
         serializer = TicketSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, safe=False, status=status.HTTP_400_BAD_REQUEST)
                 
-
+class BookingsView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, req):
+        bookings = Booking.objects.filter(user=req.user.id).select_related('movie')
+        serializer = BookingSerializer(bookings, many=True)
+        return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
+    
+    
 class BookingView(APIView):
     permission_classes = [IsAuthenticated]
     
     #If a booking_id is provided, it retrieves details for a specific booking. If no booking_id is provided, it retrieves a list of bookings related to the logged-in user
-    def get(self, req, booking_id=None):
-        if booking_id:
-            try:
-                booking = Booking.objects.get(user=req.user.id, id=booking_id)
-                serializer = BookingSerializer(booking)
-                return JsonResponse(serializer.data, status=status.HTTP_200_OK)
-            except Booking.DoesNotExist:
-                return JsonResponse({'message': 'Booking not found'}, status=status.HTTP_404_NOT_FOUND)
-        bookings = Booking.objects.filter(user=req.user.id).select_related('movie')
-        serializer = BookingSerializer(bookings, many=True)
-        return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+    def get(self, req, booking_id):
+        try:
+            booking = Booking.objects.get(user=req.user.id, id=booking_id)
+            serializer = BookingSerializer(booking)
+            return JsonResponse(serializer.data, status=status.HTTP_200_OK)
+        except Booking.DoesNotExist:
+            return JsonResponse({'message': 'Booking not found'}, status=status.HTTP_404_NOT_FOUND)
            
     def post(self, req):
         data = req.data

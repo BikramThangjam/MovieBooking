@@ -55,6 +55,6 @@ class TicketSerializer(serializers.ModelSerializer):
         
 class BookingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Seat
+        model = Booking
         fields = "__all__"
     

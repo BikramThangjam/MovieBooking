@@ -9,12 +9,14 @@ urlpatterns = [
     
     path('auth/login/',LoginInView.as_view(), name='user-login'),
     
-    path('movies/all/', MovieViews.as_view(), name='list-movies'),
+    path('movies/all/', MoviesView.as_view(), name='list-movies'),
+    path('movies/<int:movie_id>/', MovieDetailsView.as_view(), name='details-of-a-specific-movie'),
     path('movies/add/', MovieViewAdmin.as_view(), name='add-movie-admin-only'),
     path('movies/update/<int:id>/', MovieViewAdmin.as_view(), name='update-movie-admin-only'),
     path('movies/delete/<int:id>/', MovieViewAdmin.as_view(), name='delete-movie-admin-only'),
     path('movies/filters/', MoviesFilterView.as_view(), name='filter-movies-by-genre-lan-city-rating'),
     path('movies/filters/byCategory/', MoviesFilterByCategory.as_view(), name='filter-movies-by-category'),
+    path('movies/filters/byTitle/', MoviesFilterByTitle.as_view(), name='filter-movies-by-title'),
     
     path('theater/add/', TheaterView.as_view(), name='add-theater'),
     path('theater/all/', TheaterView.as_view(), name='list-theater'),
@@ -33,6 +35,7 @@ urlpatterns = [
     path('tickets/', TicketView.as_view(), name='fetch-booked-tickets'),
     path('tickets/new/', TicketView.as_view(), name='book-new-ticket'),
     
+    path('booking/all/',BookingsView.as_view(), name='booking-list'),
     path('booking/<int:booking_id>/', BookingView.as_view(), name='booking-summary'),
     path('booking/add/', BookingView.as_view(), name='add-new-booking'),
     path('booking/delete/<int:booking_id>/', BookingView.as_view(), name='delete-or-cancel-booking'),
