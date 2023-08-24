@@ -36,16 +36,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.username
 
+class Genre(models.Model):
+    name=models.CharField(max_length=250)
+
 #for admin    
 class Movie(models.Model):
     category= models.CharField(max_length=250)
     title = models.CharField(max_length=250)
     description = models.TextField()
-    genre = models.CharField(max_length=250)
+    genre = models.ManyToManyField(Genre)
     language = models.CharField(max_length=250)
     rating = models.CharField(max_length=10)
+    votes = models.IntegerField(default=0, verbose_name="Number of Votes")
     image = models.TextField()
     movie_length = models.IntegerField()
+    release_date = models.DateField()
 
     def __str__(self):
         return self.title

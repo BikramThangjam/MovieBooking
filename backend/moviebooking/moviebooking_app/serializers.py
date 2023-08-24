@@ -32,7 +32,13 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Invalid username or password")
-    
+
+class GenreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Genre
+        fields = "__all__"
+
+
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie

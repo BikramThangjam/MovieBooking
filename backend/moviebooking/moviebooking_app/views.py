@@ -63,6 +63,12 @@ class UserProfileView(APIView):
         user.delete()
         return JsonResponse({"message": "User deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
 
+class GenresView(APIView):
+    def get(self, req):
+        genres = Genre.objects.all()
+        serializer = GenreSerializer(genres, many=True)
+        return JsonResponse(serializer.data, safe=False, status=200)
+
 class MoviesView(APIView):
     def get(self, req):
         page_number = req.GET.get("page", 1)
