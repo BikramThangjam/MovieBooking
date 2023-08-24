@@ -185,7 +185,22 @@ class MovieViewAdmin(APIView):
         
         movie.delete()
         return JsonResponse({"message": "Movie deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
-    
+
+class BulkCreateMovieView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def post(self, request, format=None):
+        movies_data = request.data
+
+        # Validate and create movies
+        serializer = MovieSerializer(data=movies_data, many=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({
+                "message": "Movie added",
+                "data": serializer.data
+            }, safe=False, status=status.HTTP_201_CREATED)
+        return JsonResponse(serializer.errors, safe=False, status=status.HTTP_400_BAD_REQUEST)  
 
 class TheaterView(APIView):
     def post(self, req):

@@ -9,9 +9,11 @@ urlpatterns = [
     
     path('auth/login/',LoginInView.as_view(), name='user-login'),
     
+    path('genres/all/',GenresView.as_view(),name='list-genres'),
     path('movies/all/', MoviesView.as_view(), name='list-movies'),
     path('movies/<int:movie_id>/', MovieDetailsView.as_view(), name='details-of-a-specific-movie'),
     path('movies/add/', MovieViewAdmin.as_view(), name='add-movie-admin-only'),
+    path('movies/bulkadd/', BulkCreateMovieView.as_view(), name='bulk-add-movies'),
     path('movies/update/<int:id>/', MovieViewAdmin.as_view(), name='update-movie-admin-only'),
     path('movies/delete/<int:id>/', MovieViewAdmin.as_view(), name='delete-movie-admin-only'),
     path('movies/filters/', MoviesFilterView.as_view(), name='filter-movies-by-genre-lan-city-rating'),
