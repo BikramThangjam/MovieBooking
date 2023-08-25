@@ -1,5 +1,6 @@
 .image-container{
     position: relative;
+    height: 300px;
     transition: transform 0.2s;
   }
   
@@ -19,30 +20,10 @@
     transition: 0.5s ease;
     opacity: 0;
     bottom: 0;
-    font-size: 20px;
+    font-size: 15px;
     padding: 20px;
     text-align: center;
   }
 
-
-  .cards {
-    display: inline-block;
-    transition: transform .2s;
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 0.19rem;
-    cursor:pointer;
-    min-width:200px;
-    height:300px;
-    z-index:0;
-    border: 1px solid rgb(99, 99, 99);
-}
-
-.cards:hover {
-    transform: scale(1.1);
-    z-index: 1000;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-}
 
 

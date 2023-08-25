@@ -71,7 +71,7 @@ class Seat(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     seat_no = models.CharField(max_length=10)
     is_reserved = models.BooleanField(default=False)
-    category = models.CharField(max_length=250)
+    category = models.CharField(max_length=250, default="standard")
     price = models.FloatField(default=0.00)
     
     def __str__(self):

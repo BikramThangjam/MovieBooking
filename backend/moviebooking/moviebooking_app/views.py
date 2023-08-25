@@ -96,7 +96,8 @@ class MoviesFilterView(APIView):
         movies = Movie.objects.all()
         
         if genre:
-            movies = movies.filter(genre__iexact = genre)
+            genre_ids = Genre.objects.filter(name__icontains=genre).values_list("id", flat=True)
+            movies = movies.filter(genre__in=genre_ids)
         if language:
             movies = movies.filter(language__iexact = language)
         if city:

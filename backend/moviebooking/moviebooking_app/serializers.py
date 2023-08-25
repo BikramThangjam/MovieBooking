@@ -40,6 +40,7 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    genre = GenreSerializer(many=True, read_only=True)
     class Meta:
         model = Movie
         fields = "__all__"

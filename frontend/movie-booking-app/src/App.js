@@ -1,8 +1,9 @@
 // import {useEffect, useState} from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import './App.css';
-import MainContent from './components/MainContent/MainContent';
 import Navbar from './components/Navbar/Navbar';
+import Home from './pages/Home/Home';
+import MovieDetail from './components/MovieDetail/MovieDetail';
 
 function App() {
 
@@ -11,8 +12,8 @@ function App() {
       <Router>
         <Navbar/>
         <Routes>
-          <Route path="/" element={<MainContent/>}></Route>
-          <Route path="movie/:id" element={<h1>Movie Detail Page</h1>}></Route>
+          <Route path="/" element={<Home/>}></Route>
+          <Route path="movie/:id" element={<MovieDetail/>}></Route>
           <Route path="/*" element={<h1>Page Not Found</h1>}></Route>
         </Routes>
       </Router>    
