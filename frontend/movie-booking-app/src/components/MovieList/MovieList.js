@@ -27,7 +27,7 @@ const MovieList = (props) => {
       for (let i = 0; i < 10; i++) {
         skeletons.push(
           <div className="d-flex justify-content-start mt-3 me-3" key={i}>
-            <SkeletonTheme baseColor="#1c1b1a" highlightColor="#2e2b28">
+            <SkeletonTheme baseColor="#04051c" highlightColor="#0b0d29">
               <div className="col-12 col-xl-3 col-md-4 col-sm-6 mb-3">
                 <Skeleton height={300} width={200} />
               </div>

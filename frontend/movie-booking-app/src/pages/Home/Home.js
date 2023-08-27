@@ -4,8 +4,8 @@ import Banner from "./Banner/Banner";
 
 const Home = () => {
     return (
-        <div className="container-fluid movie-app p-0"> 
-            {/* <Banner/>                   */}
+        <div className="container movie-app p-0"> 
+            <Banner/>                  
             <div className="p-3">
                 <MovieList category={'now_playing'} text={'NOW PLAYING'}/>                
                 <MovieList category={'upcoming'}  text={'UPCOMING'}/>      

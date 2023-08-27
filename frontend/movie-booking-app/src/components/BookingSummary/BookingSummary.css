@@ -1,0 +1,13 @@
+.booking{
+    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+    border-radius: 10px;
+}
+
+.booking h3{
+    color: black;
+    font-weight: 700;
+}
+.booking .content{
+    width: 80%;
+    margin: auto;
+}

@@ -20,9 +20,9 @@ class SignUpView(APIView):
             
             if serializer.is_valid():
                 user = serializer.save()
-                return JsonResponse({"message": "Account has been created"})
+                return JsonResponse({"message": "Account has been created"}, safe=False, status=200)
             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST, safe=False)       
-        return JsonResponse({"message": "Account already exist"}, status=status.HTTP_400_BAD_REQUEST)
+        return JsonResponse({"message": "Account already exist!"}, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginInView(APIView):
     def post(self, req):
@@ -36,7 +36,7 @@ class LoginInView(APIView):
                 "refresh": str(refresh),
                 "access": str(refresh.access_token)
             }) 
-        return JsonResponse({"message":"Invalid username or password"}, status=status.HTTP_400_BAD_REQUEST)
+        return JsonResponse({"message":"Incorrect username or password!"}, status=status.HTTP_400_BAD_REQUEST)
         
         
 

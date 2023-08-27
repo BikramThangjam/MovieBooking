@@ -1,27 +1,39 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useState, useContext} from "react"
 import "./MovieDetail.css"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import MyContext from "../../MyContext";
 const MovieDetail = () => {
     const [movieDetail, setMovieDetail] = useState()
-    const { id } = useParams()
-
+    const { movie_id } = useParams()
+    const { summary, setSummary } = useContext(MyContext);
+    console.log("Movie details of id--", movie_id)
     useEffect(() => {
         getDetails()
         window.scrollTo(0,0) //once page is loaded, scroll to top
     }, [])
 
     const getDetails = async () => {
-        const res = await fetch(`http://127.0.0.1:8000/api/movies/${id}/`)
+        const res = await fetch(`http://127.0.0.1:8000/api/movies/${movie_id}/`)
         const data = await res.json()
         setMovieDetail(data)
     }
 
+    const handleClick = ()=>{
+        const updatedObj = {
+            ...summary,
+            movie: {
+                movie_id,
+                movie_name: movieDetail.title
+            }
+        }
+
+        setSummary(updatedObj)
+    }
     
     return (
-        <SkeletonTheme baseColor="#1c1b1a" highlightColor="#2e2b28">
+        <SkeletonTheme baseColor="#04051c" highlightColor="#0b0d29">
             <div className="container-fluid movie">
                 <div className="movie__intro">
                     {   
@@ -63,7 +75,7 @@ const MovieDetail = () => {
                             </div>
                         </div>
                         <div className="movie__detailRightBottom">
-                            <div className="synopsisText">Synopsis</div>
+                            <div className="synopsisText">Description</div>
                             {
                                 movieDetail
                                 ? <div>{movieDetail.description}</div>
@@ -73,7 +85,7 @@ const MovieDetail = () => {
                             <div className="d-flex justify-content-center mt-3">
                                 {
                                     movieDetail
-                                    ? <button class="mybtn book-btn">BOOK TICKETS</button>
+                                    ? <Link style={{textDecoration: "none", color: "white"}} class="mybtn book-btn text-center" to={`/theater/${movie_id}`} onClick={handleClick}>BOOK TICKETS</Link>
                                     : <Skeleton width={300} height={50}/>
                                 }
                             </div>

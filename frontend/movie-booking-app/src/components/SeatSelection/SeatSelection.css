@@ -1,0 +1,132 @@
+.theater-container {
+    perspective: 1000px;
+    margin-bottom: 30px;
+    width: 50%;
+    margin: auto;
+  }
+  .seat {
+    background-color: #f3f7f4d5;
+    height: 30px;
+    width: 35px;
+    margin: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  
+  .seat.selected {
+    background-color: #35d406;
+    color: #fff;
+  }
+  
+  .seat.occupied {
+    background-color: #444451;
+    color: #fff;
+  }
+
+  .seat.na{
+    background-color: rgb(18, 16, 36);
+    color: #fff;
+    cursor: default;
+  }
+  
+  .seat-container:nth-child(2){
+    margin-bottom: 25px;
+  }
+  
+  .seat:nth-of-type(3) {
+    margin-right: 18px;
+  }
+  
+  .seat:nth-last-of-type(2) {
+    margin-left: 18px;
+  }
+  
+  .seat:not(.occupied):hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+  
+  .showcase .seat:not(.occupied):hover {
+    cursor: default;
+    transform: scale(1);
+  }
+  
+  .showcase {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #777;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .showcase li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+  }
+  
+  .showcase li small {
+    margin-left: 2px;
+  }
+  
+  .seat-row {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .screen {
+    background-color: #fff;
+    height: 70px;
+    width: 100%;
+    margin: 15px 0;
+    transform: rotateX(-45deg);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
+  }
+
+  .footer-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-image: radial-gradient( circle 815px at 23.4% -21.8%,  rgba(9,29,85,1) 0.2%, rgba(0,0,0,1) 100.2% );
+    padding: 10px 0;
+    color: white;
+    border-radius: 10px;
+}
+
+.footer-container p{
+    color: white;
+    font-size: 1.5rem;
+}
+
+.proceed-btn {
+    width: 150px;
+    height: 55px;
+    margin: 10px;
+    background: linear-gradient(90deg, #d835bd 0%, #515ada 100%);
+    background-size: 200%;
+    font-size: 1em;
+    font-weight: 600;
+    border-radius: 100px;
+    color: white;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 1em 2em;
+    cursor: pointer;
+    transition: all 500ms ease;
+    box-shadow: 0 4px 6px -1px hsla(0, 0%, 0%, 0.1), 0 2px 4px -2px hsla(0, 0%, 0%, 0.1);
+    
+}
+
+.proceed-btn:hover {
+    animation-name: flow;
+    animation-duration: 500ms;
+    animation-timing-function: linear;
+}

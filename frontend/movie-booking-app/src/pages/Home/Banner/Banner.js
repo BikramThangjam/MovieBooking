@@ -35,7 +35,7 @@ const Banner = () => {
             </div>
             <div className="banner-text">
                 <h1>BOOK YOUR <span style={{color: "rgb(236, 94, 113)"}}>MOVIE</span> TICKETS TODAY!!!</h1>
-                <p>Experience the thrill of the big screen with the latest blockbusters.</p>             
+                <p style={{color: "aqua"}}>Experience the thrill of the big screen with the latest blockbusters.</p>             
             </div> 
           </div>
         ))}
