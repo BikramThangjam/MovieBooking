@@ -2,8 +2,32 @@
     background-image: linear-gradient( 111.4deg,  rgba(7,7,9,1) 6.5%, rgba(27,24,113,1) 93.2% );
 }
 
+.gradient-text {
+    font-weight: bold;
+    font-size: 1.50rem;
+    background: -webkit-linear-gradient(#5251aa, #ca43db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+.login-text:hover{
+    background: -webkit-linear-gradient(#5251aa, #ca43db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.rotate-on-hover {
+    transform: rotate(-7deg);
+    transition: transform 0.3s ease;
+}
+  
+.rotate-on-hover:hover {
+    transform: rotate(0deg);
+}
+
 .join-btn {
-    width: 150px;
+    width: 130px;
     height: 55px;
     margin: 10px;
     background: linear-gradient(90deg, #d835bd 0%, #515ada 100%);
@@ -36,3 +60,11 @@ background-position: 0% 50%;
 background-position: 100%;
 }
 }
+
+/*Dropdown profile*/
+
+/* Add this CSS to your existing stylesheet or create a new stylesheet */
+
+/* Dropdown container */
+
+  

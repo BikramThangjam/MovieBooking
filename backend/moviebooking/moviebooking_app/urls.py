@@ -4,11 +4,13 @@ from .views import *
 urlpatterns = [
     path('users/signup/',SignUpView.as_view(), name='user-signup' ),
     path('users/profile/',UserProfileView.as_view(), name='get-user-details' ),
-    path('users/profile/update/',UserProfileView.as_view(), name='update-user-details' ),
+    path('users/profile/update/',UserProfileView.as_view(), name='update-user-details'),
     path('users/profile/delete/',UserProfileView.as_view(), name='remove-user' ),
     
     path('auth/login/',LoginInView.as_view(), name='user-login'),
     
+    path("refresh/", RefreshTokenView.as_view(), name="generate-new-token"),
+
     path('genres/all/',GenresView.as_view(),name='list-genres'),
     path('movies/all/', MoviesView.as_view(), name='list-movies'),
     path('movies/<int:movie_id>/', MovieDetailsView.as_view(), name='details-of-a-specific-movie'),

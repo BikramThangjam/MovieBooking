@@ -1,6 +1,6 @@
 .image-container{
     position: relative;
-    height: 300px;
+    height: 220px;
     transition: transform 0.2s;
   }
   
@@ -9,8 +9,15 @@
     transform: scale(1.1);
   }
   
-  .image-container:hover .overlay{
-    opacity: 1;
+  .overlay-top{
+    width: 100%;
+    position: absolute;
+    top:0;
+    opacity: 0;
+    font-size: 13px;
+    padding: 15px;
+    background: rgba(0,0,0,0.8);
+    transition: 0.5s ease;
   }
   
   .overlay{
@@ -25,5 +32,7 @@
     text-align: center;
   }
 
-
+  .image-container:hover .overlay, .image-container:hover .overlay-top{
+    opacity: 1;
+  }
 

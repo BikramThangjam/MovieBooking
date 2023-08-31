@@ -1,0 +1,4 @@
+.filter-list li > button, .filter-list li input{
+    width: 95%;
+    margin-bottom: 5px;
+  }

@@ -8,7 +8,7 @@ const MovieDetail = () => {
     const [movieDetail, setMovieDetail] = useState()
     const { movie_id } = useParams()
     const { summary, setSummary } = useContext(MyContext);
-    console.log("Movie details of id--", movie_id)
+    // console.log("Movie details of id--", movie_id)
     useEffect(() => {
         getDetails()
         window.scrollTo(0,0) //once page is loaded, scroll to top
@@ -66,8 +66,8 @@ const MovieDetail = () => {
                                 {
                                     movieDetail && movieDetail.genre
                                     ? 
-                                    movieDetail.genre.map(gen => (
-                                        <><span className="movie__genre" id={gen.id}>{gen.name}</span></>
+                                    movieDetail.genre.map((gen, index)=> (
+                                        <span className="movie__genre" key={index} id={gen.id}>{gen.name}</span>
                                     )) 
                                     : 
                                     ""
@@ -85,7 +85,7 @@ const MovieDetail = () => {
                             <div className="d-flex justify-content-center mt-3">
                                 {
                                     movieDetail
-                                    ? <Link style={{textDecoration: "none", color: "white"}} class="mybtn book-btn text-center" to={`/theater/${movie_id}`} onClick={handleClick}>BOOK TICKETS</Link>
+                                    ? <Link style={{textDecoration: "none", color: "white"}} className="mybtn book-btn text-center" to={`/theater/${movie_id}`} onClick={handleClick}>BOOK TICKETS</Link>
                                     : <Skeleton width={300} height={50}/>
                                 }
                             </div>

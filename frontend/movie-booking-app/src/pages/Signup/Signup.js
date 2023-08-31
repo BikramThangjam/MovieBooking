@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css"
-import {Formik, Form, Field, ErrorMessage } from "formik";
+import {Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
 
@@ -111,7 +111,7 @@ const Signup = ()=>{
                     <div className={responseData.responseClass } role="alert">
                             {responseData && responseData.responseText}
                     </div>
-                    <h2 style={{color:"black"}} className="text-center mb-5">Register</h2>
+                    <h2 style={{color:"black"}} className="text-center mb-5 gradient-text">REGISTER</h2>
                     <Formik validationSchema={SignupSchema}  initialValues={initialFormValues} onSubmit={handleFormSubmit}>
                         {
                             ({errors,touched, isSubmitting, status})=>(

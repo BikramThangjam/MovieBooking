@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.views import APIView
 import json
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from django.contrib.auth.hashers import make_password # securely hash the password
 
 # Create your views here.
 class SignUpView(APIView):
@@ -51,17 +51,40 @@ class UserProfileView(APIView):
     def put(self, req):
         user = req.user
         serializer = UserSerializer(user, data=req.data, partial=True)
-        
+
         if serializer.is_valid():
+
+            if 'password' in req.data:
+                new_password = req.data['password']
+                # print("new_password -- ",new_password)
+                hashed_password = make_password(new_password)
+                # print("hashed_password -- ",hashed_password)
+                serializer.validated_data['password'] = hashed_password
+                # print("validated_password--",serializer.validated_data['password']) 
+
             serializer.save()
             return JsonResponse({"message": "User details updated successfully.", "data": serializer.data}, status=status.HTTP_200_OK)
         
-        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return JsonResponse({'message': serializer.errors}, safe=False, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, req):
         user = req.user
         user.delete()
         return JsonResponse({"message": "User deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+
+class RefreshTokenView(APIView):
+    def post(self, req):
+        refresh_token = req.data.get("refresh")
+        if not refresh_token:
+            return JsonResponse({"message": "Refresh token is required"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            refresh_token = RefreshToken(refresh_token)
+            access_token = refresh_token.access_token
+        except Exception as e:
+            return JsonResponse({"message": "Invalid refresh token"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        return JsonResponse({"access":str(access_token)}, status=status.HTTP_200_OK)
+
 
 class GenresView(APIView):
     def get(self, req):
@@ -117,7 +140,7 @@ class MoviesFilterByCategory(APIView):
         
         movies = Movie.objects.filter(category__icontains=cat)
         
-        paginator = Paginator(movies, 10)
+        paginator = Paginator(movies, 20)
         page = paginator.get_page(page_no)
         movies_pages = page.object_list
         
@@ -133,9 +156,23 @@ class MoviesFilterByCategory(APIView):
 class MoviesFilterByTitle(APIView):
     def get(self, req):
         title = req.GET.get('title')
-        movies = Movie.objects.filter(title__icontains = title)
-        serializer = MovieSerializer(movies, many=True)
-        return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
+        page_number = req.GET.get("page", 1)
+
+        movies = Movie.objects.all()
+        if title:
+            movies = movies.filter(title__icontains = title)
+
+        paginator = Paginator(movies, 14)
+        page = paginator.get_page(page_number)
+        movies_pages = page.object_list
+       
+        serializer = MovieSerializer(movies_pages, many=True)
+        return JsonResponse({
+            "total_pages": paginator.num_pages,
+            "total_movies": movies.count(),
+            "current_page": page.number,
+            "data": serializer.data,
+        }, safe=False, status=status.HTTP_200_OK)
     
 class MovieDetailsView(APIView):
     def get(self, req, movie_id):

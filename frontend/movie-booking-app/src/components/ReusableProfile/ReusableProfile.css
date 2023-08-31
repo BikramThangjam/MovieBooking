@@ -1,0 +1,31 @@
+.padding{
+    padding-top: 3rem !important;
+}
+
+.card-shadow{
+    border-radius: 20px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    overflow: hidden;
+    padding-bottom: 15px;
+}
+.card-img-top{
+    height:150px;
+}
+
+.pro-img {
+    margin-top: -80px;
+    margin-bottom: 20px
+}
+.little-profile .pro-img img {
+    width: 100px;
+    height: 100px;
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 100%
+    
+}
+
+.little-profile p{
+    margin: 0;
+}

@@ -7,9 +7,45 @@
     display: inline-block;
     background-color: rgb(236, 94, 113);
     border-radius: 3px;
-    padding: 10px 20px;
+    padding: 6px 10px;
     cursor: pointer;
     text-decoration: none;
     color: rgb(255, 255, 255);
   }
+
+.search-panel{
+  width:500px;
+}
+
+.filters{
+  background-color: black;
+}
+
+.search-btn {
+  width: 130px;
+  height: 55px;
+  margin: 10px;
+  background: linear-gradient(90deg, #d835bd 0%, #515ada 100%);
+  background-size: 200%;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 100px;
+  color: white;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 1em 2em;
+  cursor: pointer;
+  transition: all 500ms ease;
+  box-shadow: 0 4px 6px -1px hsla(0, 0%, 0%, 0.1), 0 2px 4px -2px hsla(0, 0%, 0%, 0.1);
+  
+}
+
+.search-btn:hover {
+  animation-name: flow;
+  animation-duration: 500ms;
+  animation-timing-function: linear;
+}
+
+
 

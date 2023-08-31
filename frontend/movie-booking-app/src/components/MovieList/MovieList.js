@@ -47,7 +47,7 @@ const MovieList = (props) => {
 
   return (
     <>
-      <h5 className="movie-cat mb-0 mt-3">{props.text}</h5>
+      <p className="movie-cat mb-0 mt-5">{props.text}</p>
 
       <div className="row">
         {

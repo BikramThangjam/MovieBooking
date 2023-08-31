@@ -8,7 +8,7 @@ import { useState } from "react"
 const Banner = () => {   
     const [popularMovies, setPopularMovies] = useState(jsondata)
   return (
-    <div className="banner">
+    <div className="container-fluid mx-0 px-0">
       <Carousel
         showThumbs={false}
         autoPlay={true}

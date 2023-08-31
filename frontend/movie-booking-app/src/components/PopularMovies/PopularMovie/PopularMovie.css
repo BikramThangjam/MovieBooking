@@ -1,0 +1,38 @@
+.card-main{
+    position: relative;
+    transition: transform 0.2s;
+    max-width: 175px;
+  }
+  
+  .card-main:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+
+  .overlay-top{
+    width: 100%;
+    position: absolute;
+    top:0;
+    opacity: 0;
+    font-size: 13px;
+    padding: 15px;
+    background: rgba(0,0,0,0.8);
+    transition: 0.5s ease;
+  }
+  
+  .overlay{
+    position: absolute;
+    background: rgba(0,0,0,0.8);
+    width: 100%;
+    transition: 0.5s ease;
+    opacity: 0;
+    bottom: 0;
+    font-size: 15px;
+    padding: 20px;
+    text-align: center;
+  }
+
+
+  .card-main:hover .overlay, .card-main:hover .overlay-top{
+    opacity: 1;
+  }

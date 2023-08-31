@@ -17,9 +17,10 @@ const MyContextProvider = ({ children }) => {
         total: ""
     }
   const [summary, setSummary] = useState(initialVal);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <MyContext.Provider value={{ summary, setSummary }}>
+    <MyContext.Provider value={{ summary, setSummary, isLoggedIn, setIsLoggedIn }}>
       {children}
     </MyContext.Provider>
   );

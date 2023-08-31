@@ -2,7 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Login.css"
 import {Formik, Form, Field} from "formik";
 import * as Yup from "yup";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import MyContext from "../../MyContext";
 
 const LoginSchema = Yup.object().shape({
     username: Yup.string()
@@ -18,6 +19,7 @@ const LoginSchema = Yup.object().shape({
   });
 
 const Login = ()=>{
+    const {isLoggedIn, setIsLoggedIn} = useContext(MyContext);
     const [responseData, setResponseData] = useState({
         responseText: "" ,
         responseClass: "",
@@ -59,6 +61,7 @@ const Login = ()=>{
             });
             
             setTimeout(()=>{
+                setIsLoggedIn(true)
                 navigate("/");
             },2000)
             // Clear any previous errors
@@ -89,8 +92,8 @@ const Login = ()=>{
                         {
                             ({errors,touched, isSubmitting, status})=>(
                                 <Form action="#" method="#" className="form login pt-2">
-                                    <h5 style={{color:"#33338a"}}>Hello</h5>
-                                    <h2 style={{color:"#545466", fontWeight:"bold"}} className='mb-4'>WELCOME BACK</h2>
+                                    <h5 style={{color:"#33338a", paddingBottom:"5px"}}>Hello</h5>
+                                    <h2 style={{color:"#545466", fontWeight:"bold"}} className='mb-4 gradient-text'>WELCOME BACK</h2>
                                     <div>
                                         <div className="form__field">
                                             <div className="form__field2">

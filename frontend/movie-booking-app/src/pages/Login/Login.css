@@ -5,6 +5,13 @@
     height: 100vh;
 }
 
+.gradient-text {
+  font-weight: bold;
+  font-size: 1.80rem;
+  background: -webkit-linear-gradient(#5251aa, #ca43db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 .align {
   -webkit-box-align: center;
