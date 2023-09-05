@@ -3,26 +3,23 @@ import { Link, useNavigate, useLocation} from "react-router-dom";
 import MyContext from "../../MyContext";
 import "./ReusableProfile.css";
 import { fetchWithToken } from "../API/Interceptor";
-import profileImg from "../../user-male.png";
-const bgImgURL = "https://images.pexels.com/photos/354939/pexels-photo-354939.jpeg?auto=compress&cs=tinysrgb&w=600"
-//const profilePicURL = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXwzNDU1OTE3fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60";
+import profileImg from "../..//images/profile-icon.png";
+// const bgImgURL = "https://images.pexels.com/photos/354939/pexels-photo-354939.jpeg?auto=compress&cs=tinysrgb&w=600"
+import bgImgURL from "../../images/profile-bg-1.jpg";
+import { RotatingLines } from "react-loader-spinner";
 
 
 
 const ReusableProfile = () => {
-    const {isLoggedIn, setIsLoggedIn} = useContext(MyContext);
+    const {setIsLoggedIn} = useContext(MyContext);
     const [userDetail, setUserDetail] = useState()
     const [token, setToken] = useState()
     let navigate = useNavigate();
     const location = useLocation() //Get current location
-
-    useEffect(() => {
-        const storedToken = localStorage.getItem('access');
-        if (storedToken) {
-          setToken(storedToken);
-          fetchUserDetail(storedToken);
-        }
-      }, []);
+    const [responseData, setResponseData] = useState({
+        responseText: "",
+        responseClass: "",
+    });
 
     const fetchUserDetail = async (token) => {
         const apiUrl = 'http://127.0.0.1:8000/api/users/profile/'; 
@@ -49,16 +46,55 @@ const ReusableProfile = () => {
           }
     }
 
-    const onLogoutHandler = () => {
-        localStorage.removeItem("access");       
-        navigate("/login")
-        setIsLoggedIn(false)
-        
+    const onDeleteHandler = async(e) => {
+        const apiUrl = 'http://127.0.0.1:8000/api/users/profile/delete/'; 
+        const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        };
+        const options = {
+            method: 'DELETE', 
+            headers: headers,
+        }
+        try {
+            const response = await fetchWithToken(apiUrl, options);       
+            if (response.ok) {
+                setResponseData({
+                    responseText: `Account has been deleted. Redirecting...`,
+                    responseClass: "alert alert-danger",
+                });
+                          
+                setTimeout(()=>{
+                    navigate("/")
+                    setIsLoggedIn(false)
+                    localStorage.removeItem("access");
+                }, 2000)               
+              
+            } else {
+              console.error('Failed to fetch data');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }       
     }
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem('access');
+        if (storedToken) {
+          setToken(storedToken);
+          fetchUserDetail(storedToken);
+        }
+    }, []);
 
     return (
         <>
             <div className="container">
+                <div className="d-flex justify-content-end">
+                    {/* <div className="alert alert-danger" role="alert">This is an alert</div> */}
+                    <div className={responseData.responseClass} role="alert">
+                        {responseData && responseData.responseText}
+                    </div>
+                </div>
                 <div className="padding">
                     <div className="row">
                         <div className="col-md-4"></div>
@@ -69,14 +105,32 @@ const ReusableProfile = () => {
                                     <div className="pro-img">
                                         <img src={profileImg} alt="user" />
                                     </div>
-                                    <h3 className="text-dark">{userDetail ? userDetail.name : "..."}</h3>
+                                    <h3 className="text-dark">
+                                        {
+                                            userDetail 
+                                            ? userDetail.name 
+                                            : (
+                                                <RotatingLines                   
+                                                    strokeColor="grey"
+                                                    strokeWidth="5"
+                                                    animationDuration="0.75"
+                                                    width="30"
+                                                    visible={true}
+                                                />
+                                            ) }
+                                    </h3>
                                     <div className="  mb-3 ">
                                         {
                                             location.pathname === "/profile" && (
                                                 <>
                                                     <p>{userDetail && `Username: ${userDetail.username}`}</p>
                                                     <p>{userDetail && `Email: ${userDetail.email}`}</p>
-                                                    <p>{userDetail && `Status: ${userDetail.is_active?"Active":"Inactive"}`}</p>
+                                                    <p>
+                                                        {userDetail && `Status: `}
+                                                        <span className={userDetail && userDetail.is_active && "active"}>
+                                                            {userDetail && ` ${userDetail.is_active ? "Active" : "Inactive" }`}
+                                                        </span>
+                                                    </p>
                                                 </>
                                             )
                                         }
@@ -87,13 +141,37 @@ const ReusableProfile = () => {
                                         location.pathname === "/settings" && (
                                         <>
                                             <Link className="btn btn-dark btn-block" to="/settings/update-profile">Edit Profile</Link>
-                                            <Link className="btn btn-dark btn-block" to="/settings/change-password">Change Password</Link>
-                                            <Link className="btn btn-dark btn-block" onClick={onLogoutHandler} to="/login">Logout</Link>
+                                            <Link className="btn btn-dark btn-block" to="/settings/change-password">Change Password</Link>                                
+                                            <button className="btn btn-warning btn-block" data-toggle="modal" data-target="#exampleModal">
+                                                Delete Account
+                                            </button>
+
                                         </>
                                         )
-                                    }
-                                                                       
-                                    </div>                                 
+                                    }                                                                      
+                                    </div>
+                                    
+                                    {/* Model for Delete Account Confirmation */}
+                                    <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div className="modal-dialog">
+                                            <div className="modal-content">
+                                                <div className="modal-header">
+                                                    <h5 className="modal-title text-dark" id="exampleModalLabel">Confirm Account Deletion</h5>
+                                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div className="modal-body text-dark">
+                                                    Are you sure you want to delete your account? This action cannot be undone.
+                                                </div>
+                                                <div className="modal-footer">
+                                                    <button type="button" className="btn btn-secondary text-white" data-dismiss="modal">Cancel</button>
+                                                    <button type="button" className="btn btn-danger text-white" data-dismiss="modal" onClick={onDeleteHandler}>Confirm Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                                                          
                                 </div>
                             </div>
                         </div>

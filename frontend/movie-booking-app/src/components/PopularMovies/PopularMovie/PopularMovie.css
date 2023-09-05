@@ -1,7 +1,7 @@
 .card-main{
     position: relative;
     transition: transform 0.2s;
-    max-width: 175px;
+    max-width: 170px;
   }
   
   .card-main:hover{
@@ -35,4 +35,8 @@
 
   .card-main:hover .overlay, .card-main:hover .overlay-top{
     opacity: 1;
+  }
+
+  .no-results{
+    height: 300px;
   }

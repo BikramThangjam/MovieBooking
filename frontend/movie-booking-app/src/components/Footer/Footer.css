@@ -1,0 +1,12 @@
+.footer-bg{
+    background-image: linear-gradient(to right top, #14163b, #070922, #13174b, #060933, #01031a);
+    
+}
+
+.text-color{
+    color: rgb(201, 191, 238);
+    padding-right: 1.6rem;
+}
+.footer-link{
+    font-size: 1.2em;
+}

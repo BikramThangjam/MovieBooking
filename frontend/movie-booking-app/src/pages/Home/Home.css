@@ -2,7 +2,14 @@
     overflow-x: auto;
     flex-wrap: nowrap;
   }
-  
+
+  /* #no-scroll1::-webkit-scrollbar {
+    width: auto;
+  }
+  #no-scroll1::-webkit-scrollbar-track, #no-scroll1::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+   */
   .movie-cat{
     display: inline-block;
     background-color: rgb(236, 94, 113);

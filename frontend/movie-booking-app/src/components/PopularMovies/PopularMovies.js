@@ -8,10 +8,19 @@ const PopularMovies = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const {searchVal, filters} = props
 
   const getMoviesReq = async () => {
+
     setIsLoading(true)
-    const url = `http://127.0.0.1:8000/api/movies/filters/byTitle/?${props.searchVal ? "title=" + props.searchVal : ""}&page=${currentPage}`;
+
+    const searchTxt = `${searchVal ? "title=" + searchVal : ""}`;
+    const genreTxt = `${filters.genre ? "&genre=" + filters.genre : ""}`;
+    const langTxt = `${filters.language ? "&lan=" + filters.language : ""}`;
+    const locTxt = `${filters.location ? "&city=" + filters.location : ""}`;
+    const ratingTxt = `${filters.rating ? "&rating=" + filters.rating : ""}`
+
+    const url = `http://127.0.0.1:8000/api/movies/filters/?${searchTxt}${genreTxt}${langTxt}${locTxt}${ratingTxt}&page=${currentPage}`;
     const res = await fetch(url);
     // console.log("response ", res)
 
@@ -30,7 +39,7 @@ const PopularMovies = (props) => {
 
   useEffect(() => {
     getMoviesReq();
-  }, [props.searchVal, currentPage]);
+  }, [searchVal, filters, currentPage]);
 
   const Loading = () => {
     const renderSkeletons = () => {
@@ -40,7 +49,7 @@ const PopularMovies = (props) => {
           <div className="" key={i}>
             <SkeletonTheme baseColor="#04051c" highlightColor="#0b0d29">
               <div className="col-12 col-xl-3 col-md-4 col-sm-6 mb-3">
-                <Skeleton height={300} width={175} />
+                <Skeleton height={250} width={175} />
               </div>
             </SkeletonTheme>
           </div>
@@ -68,9 +77,19 @@ const PopularMovies = (props) => {
             ? 
             <Loading />
             : 
-            movies.map((movie, index) => <PopularMovie movie={movie} key={index} />)
+            movies.length > 0 ? (
+              movies.map((movie, index) => (
+                <PopularMovie movie={movie} key={index} />
+                ))
+              ) : (
+                <div className=" no-results w-100 d-flex justify-content-center align-items-center">
+                  <h4 className="text-white">No results found!</h4>
+                </div>
+              )
         }
       </div>
+
+      {/* Pagination */}
       <div className="d-flex justify-content-center mt-3">
         <nav aria-label="Page navigation">
           <ul className="pagination">

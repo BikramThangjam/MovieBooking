@@ -1,0 +1,4 @@
+.filter-list li > button, .filter-list li input, form>button{
+    width: 95%;
+    margin-bottom: 5px;
+  }

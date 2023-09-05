@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { fetchWithToken } from "../../../components/API/Interceptor";
 import "../../../components/ReusableProfile/ReusableProfile.css";
 import "./ChangePassword.css";
-import profileImg from "../../../user-male.png";
-const bgImgURL =
-  "https://images.pexels.com/photos/354939/pexels-photo-354939.jpeg?auto=compress&cs=tinysrgb&w=600";
+import profileImg from "../../../images/profile-icon.png";
+import bgImgURL from "../../../images/profile-bg-1.jpg";
 
 const ChangePassword = () => {
   const [token, setToken] = useState();

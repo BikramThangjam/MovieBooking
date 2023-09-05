@@ -26,7 +26,7 @@
     transform: rotate(0deg);
 }
 
-.join-btn {
+.join-btn, .logout-btn {
     width: 130px;
     height: 55px;
     margin: 10px;
@@ -46,10 +46,23 @@
     
 }
 
-.join-btn:hover {
+.join-btn:hover{
     animation-name: flow;
     animation-duration: 500ms;
     animation-timing-function: linear;
+}
+
+.logout-btn{
+    background: linear-gradient(90deg, #131213 0%, #1e1e22 100%);
+    border-radius: 0px;
+    width: 130px;
+    height: 50px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.logout-btn:hover{
+    background: azure;
+    color: rgb(39, 38, 38);
 }
 
 @keyframes flow {
@@ -61,10 +74,29 @@ background-position: 100%;
 }
 }
 
-/*Dropdown profile*/
+.navbar-nav li{
+    padding-left: 15px;
+}
 
-/* Add this CSS to your existing stylesheet or create a new stylesheet */
 
-/* Dropdown container */
+/* Add this CSS to your stylesheet */
+.with-underline-on-hover {
+    position: relative;
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s;
+}
 
-  
+.with-underline-on-hover:hover {
+    color: white; /* You can change the color as needed */
+}
+
+.with-underline-on-hover:hover::before, .with-underline-on-hover:focus::before {
+    content: "";
+    position: absolute;
+    bottom: -2px; /* Adjust this value to control the underline position */
+    left: 0;
+    right: 0;
+    height: 2px; /* Adjust this value to control the underline thickness */
+    background-color: white; /* You can change the color as needed */
+}

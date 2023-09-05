@@ -1,0 +1,14 @@
+.main-form{
+    width: 45%;
+    margin: auto;
+}
+.addMovieForm{   
+    max-height: 450px;
+    margin-top: 20px;
+}
+
+.status-alert{
+    position: absolute;
+    top: 0;
+    right: 10px;
+}

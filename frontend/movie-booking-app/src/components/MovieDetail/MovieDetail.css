@@ -1,5 +1,6 @@
 .movie {
     width: 100%;
+    background-color: #02021b;
     position: relative;
     display: flex;
     flex-direction:column;

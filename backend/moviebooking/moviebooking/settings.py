@@ -140,7 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "moviebooking_app.User"
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=2), #Adjust the expiration time as required
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30), #Adjust the expiration time as required
 }
 
 REST_FRAMEWORK = {

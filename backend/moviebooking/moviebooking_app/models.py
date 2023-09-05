@@ -71,22 +71,22 @@ class Seat(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     seat_no = models.CharField(max_length=10)
     is_reserved = models.BooleanField(default=False)
-    category = models.CharField(max_length=250, default="standard")
+    category = models.CharField(max_length=250, default="regular")
     price = models.FloatField(default=0.00)
     
     def __str__(self):
         return f"{self.theater.name} - {self.movie.title} -  Seat {self.seat_no}"
     
-class Ticket(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    seat = models.ForeignKey(Seat, on_delete=models.CASCADE)
-    category = models.CharField(max_length=250)
-    price = models.FloatField(default=0.00)
-    created_at = models.DateTimeField(auto_now_add=True)
+# class Ticket(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+#     seat = models.ForeignKey(Seat, on_delete=models.CASCADE)
+#     category = models.CharField(max_length=250)
+#     price = models.FloatField(default=0.00)
+#     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Ticket for {self.movie.title} - Seat {self.seat.seat_no}"
+#     def __str__(self):
+#         return f"Ticket for {self.movie.title} - Seat {self.seat.seat_no}"
     
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

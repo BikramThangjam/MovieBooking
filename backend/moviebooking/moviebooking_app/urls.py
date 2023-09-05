@@ -6,7 +6,10 @@ urlpatterns = [
     path('users/profile/',UserProfileView.as_view(), name='get-user-details' ),
     path('users/profile/update/',UserProfileView.as_view(), name='update-user-details'),
     path('users/profile/delete/',UserProfileView.as_view(), name='remove-user' ),
-    
+    path('users/getUser/<int:user_id>/', UserAdminView.as_view(), name="get-user-details-admin-only"),
+    path('users/updateUser/<int:user_id>/', UserAdminView.as_view(), name="update-user-details-admin-only"),
+    path('users/deleteUser/<int:user_id>/', UserAdminView.as_view(), name="delete-user-admin-only"),
+
     path('auth/login/',LoginInView.as_view(), name='user-login'),
     
     path("refresh/", RefreshTokenView.as_view(), name="generate-new-token"),
@@ -27,21 +30,22 @@ urlpatterns = [
     path('theaters/<int:movie_id>/', TheatersMovieView.as_view(), name='all-theaters-of-specific-movie'),
     
     path('seats/all/by_theater_movie_id/', SeatsTheaterMovieView.as_view(), name='all-seats-of-specific-theater'),
-    path('seats/<int:movie_id>/', SeatView.as_view(), name='seats-for-specific-movie-admin-only'),
-    path('seats/reservation/add/', SeatView.as_view(), name='reserve-seat-admin-only'),
-    path('seats/reservation/update/<int:seat_id>/', SeatView.as_view(), name='update-seat-reservation-admin-only'),
+    path('seats/<int:seat_id>/', SeatView.as_view(), name='fetch-details-of-a-seat'),
     path('seat/add/', SeatAdminView.as_view(), name='add-seat-admin-only'),
     path('seat/update/<int:id>/', SeatAdminView.as_view(), name='update-seat-admin-only'),
     path('seat/delete/<int:id>/', SeatAdminView.as_view(), name='delete-seat-admin-only'),
+    # path('seats/reservation/add/', SeatView.as_view(), name='reserve-seat-admin-only'),
+    # path('seats/reservation/update/<int:seat_id>/', SeatView.as_view(), name='update-seat-reservation-admin-only'),
     
     
     
-    path('tickets/', TicketView.as_view(), name='fetch-booked-tickets'),
-    path('tickets/new/', TicketView.as_view(), name='book-new-ticket'),
+    # path('tickets/', TicketView.as_view(), name='fetch-booked-tickets'),
+    # path('tickets/new/', TicketView.as_view(), name='book-new-ticket'),
     
-    path('booking/all/',BookingsView.as_view(), name='booking-list'),
+    path('booking/all/',BookingView.as_view(), name='booking-list'),
     path('booking/<int:booking_id>/', BookingView.as_view(), name='booking-summary'),
     path('booking/add/', BookingView.as_view(), name='add-new-booking'),
     path('booking/delete/<int:booking_id>/', BookingView.as_view(), name='delete-or-cancel-booking'),
+
     
 ]

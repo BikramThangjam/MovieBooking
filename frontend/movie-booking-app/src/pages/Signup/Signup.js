@@ -1,8 +1,10 @@
+
+import { useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css"
 import {Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { useState } from "react";
+
 
 const SignupSchema = Yup.object().shape({
     name: Yup.string()
@@ -101,7 +103,7 @@ const Signup = ()=>{
     
         setSubmitting(false);
       };
-      
+    
 
     return (
         <div className="signup-form row">
@@ -180,7 +182,7 @@ const Signup = ()=>{
                                                     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
                                                     </svg>
                                                 </label>
-                                                <Field id="signup__confirmPassword" type="password" name="confirmPassword"  className="form__Field" placeholder="Confirm Password" required/>
+                                                <Field id="signup__confirmPassword" type="text" name="confirmPassword"  className="form__Field" placeholder="Confirm Password" required/>
                                             </div>
                                             <div className="error ms-3">{errors.confirmPassword && touched.confirmPassword ? errors.confirmPassword : null}</div>
                                         </div>

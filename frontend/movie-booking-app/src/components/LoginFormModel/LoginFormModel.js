@@ -1,11 +1,10 @@
-import $ from "jquery";
+
 import { useState, useContext, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import MyContext from "../../MyContext";
 import "../../pages/Login/Login.css";
-
 
 const LoginSchema = Yup.object().shape({
     username: Yup.string()
@@ -18,14 +17,15 @@ const LoginSchema = Yup.object().shape({
 });
 
 const LoginFormModel = () => {
-    const { isLoggedIn, setIsLoggedIn } = useContext(MyContext);
-    const [isModalVisible, setIsModalVisible] = useState(true); // Track modal visibility
+    const {setIsLoggedIn, isModalVisible, setIsModalVisible, setIsAdmin } = useContext(MyContext);
     const [responseData, setResponseData] = useState({
         responseText: "",
         responseClass: "",
     });
 
     const buttonRef = useRef(null);
+    const modalRef = useRef(null);
+
     const navigate = useNavigate();
 
     const [initialFormValues] = useState({
@@ -55,7 +55,13 @@ const LoginFormModel = () => {
             if (response.ok) {
                 localStorage.setItem("refresh", data.refresh);
                 localStorage.setItem("access", data.access);
-
+                
+                const user = data.data;
+                if (user.is_staff === true && user.is_superuser === true){
+                    localStorage.setItem("isAdmin",true)
+                }else{
+                    localStorage.setItem("isAdmin",false)
+                }
                 setResponseData({
                     responseText: "Login successful. Redirecting...",
                     responseClass: "alert alert-success",
@@ -81,7 +87,6 @@ const LoginFormModel = () => {
 
         setSubmitting(false);
     };
-
     
     useEffect(()=>{
         let token = localStorage.getItem('access');
@@ -116,7 +121,7 @@ const LoginFormModel = () => {
                 tabIndex="-1"
                 aria-labelledby="loginFormModel"
                 aria-hidden="true"
-                
+                ref={modalRef}
             >
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
@@ -228,7 +233,15 @@ const LoginFormModel = () => {
                                             </div>
                                             <p className="text--center">
                                                 Don't have an account?{" "}
-                                                <Link to="/signup">Sign up here</Link>{" "}
+                                                <Link 
+                                                    to="/signup" 
+                                                    onClick={() => {
+                                                        modalRef.current && modalRef.current.click()
+                                                        buttonRef.current && buttonRef.current.click()
+                                                    }}
+                                                >
+                                                    Sign up here
+                                                </Link>{" "}
                                             </p>
                                         </Form>
                                     )}

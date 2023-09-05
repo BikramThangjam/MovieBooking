@@ -62,13 +62,13 @@ const TheaterList = () => {
   }
 
   return (
-    <div>
-      <h2 className="text-center display-3 pb-4">Available Theaters</h2>
+    <div className="">
+      <h3 className="text-center display-4 pb-4">Available Theaters</h3>
       {loading ? (
         <p className="text-center" style={{color: "white"}}>Loading...</p>
       ) : (
         <div className="container">
-            <table class="table table-hover table-dark" style={{maxWidth:"800px", margin:"auto"}}>
+            <table className="table table-hover table-dark" style={{maxWidth:"800px", margin:"auto"}}>
                 <thead>
                     <tr>
                     <th scope="col">#</th>

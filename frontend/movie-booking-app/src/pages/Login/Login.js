@@ -19,7 +19,7 @@ const LoginSchema = Yup.object().shape({
   });
 
 const Login = ()=>{
-    const {isLoggedIn, setIsLoggedIn} = useContext(MyContext);
+    const {setIsLoggedIn, setIsAdmin} = useContext(MyContext);
     const [responseData, setResponseData] = useState({
         responseText: "" ,
         responseClass: "",
@@ -55,6 +55,12 @@ const Login = ()=>{
             localStorage.setItem("refresh", data.refresh)
             localStorage.setItem("access", data.access)
 
+            const user = data.data;
+            if (user.is_staff === true && user.is_superuser === true){
+                localStorage.setItem("isAdmin",true)
+            }else{
+                localStorage.setItem("isAdmin",false)
+            }
             setResponseData({
                 responseText: "Login successful. Redirecting...",
                 responseClass: "alert alert-success"
@@ -137,7 +143,7 @@ const Login = ()=>{
                                             />
                                         </div>                                       
                                     </div>
-                                    <p className="text--center">Don't have an account? <Link to="/signup">Sign up here</Link> </p>
+                                    <p className="text--center">Don't have an account? <Link to="/signup" >Sign up here</Link> </p>
                                 </Form>
                             )
                         }

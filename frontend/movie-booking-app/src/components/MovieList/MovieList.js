@@ -29,7 +29,7 @@ const MovieList = (props) => {
           <div className="d-flex justify-content-start mt-3 me-3" key={i}>
             <SkeletonTheme baseColor="#04051c" highlightColor="#0b0d29">
               <div className="col-12 col-xl-3 col-md-4 col-sm-6 mb-3">
-                <Skeleton height={300} width={200} />
+                <Skeleton height={250} width={170} />
               </div>
             </SkeletonTheme>
           </div>
