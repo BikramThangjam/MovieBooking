@@ -1,5 +1,12 @@
+
+/* @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Oswald:wght@300;400&family=Quicksand&family=Sen:wght@500&family=Shadows+Into+Light&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Heebo&family=Oswald:wght@300;400&family=Quicksand&family=Sen:wght@500&family=Shadows+Into+Light&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Heebo&family=Oswald:wght@300;400&family=Quicksand&family=Sen:wght@500&family=Shadows+Into+Light&display=swap');
 *{
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Quicksand', sans-serif; 
+  font-family: 'Heebo', sans-serif;
+  
+ 
 }
 
 body{

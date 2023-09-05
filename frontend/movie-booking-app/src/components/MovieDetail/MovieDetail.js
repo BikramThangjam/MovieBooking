@@ -84,10 +84,21 @@ const MovieDetail = () => {
                                     : <div className="mt-5"><Skeleton count={3} width={800} height={25}/></div>
                                 }
                                 
-                                <div className="d-flex justify-content-center mt-3">
+                                <div className="d-flex flex-column justify-content-center align-items-center mt-3">
                                     {
                                         movieDetail
-                                        ? <Link style={{textDecoration: "none", color: "white"}} className="mybtn book-btn text-center mt-5" to={`/theater/${movie_id}`} onClick={handleClick}>BOOK TICKETS</Link>
+                                        ? (
+                                            <>
+                                                <p className="text-white"><span style={{color:"#fcba03"}}>Hurry Up!</span> Only few seats left!!!</p>
+                                                <Link 
+                                                    style={{textDecoration: "none", color: "white"}} 
+                                                    className="mybtn book-btn text-center" 
+                                                    to={`/theater/${movie_id}`} 
+                                                    onClick={handleClick}>
+                                                        BOOK TICKETS
+                                                </Link>
+                                            </>
+                                        )
                                         : <Skeleton width={300} height={50}/>
                                     }
                                 </div>

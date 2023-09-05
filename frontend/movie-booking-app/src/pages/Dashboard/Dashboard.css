@@ -27,7 +27,7 @@
 }
 
 .main-content{
-    background: #333;
+    background-image: linear-gradient(to right top, #0c1832, #101533, #161233, #1c0d32, #230630);
     flex: 1;  
 }
 
