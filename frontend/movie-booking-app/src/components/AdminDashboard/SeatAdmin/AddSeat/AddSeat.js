@@ -125,16 +125,15 @@ const AddSeat = () => {
                         />
                     </div>
                     <div className="form-group">
-                        
-                            <label htmlFor='is_reserved'>Is Reserved:</label>
-                                                    
+                        <div className="">
+                            <span style={{ marginRight:"1.2rem"}}>Is Reserved: </span>
                             <input 
                                 type="checkbox" 
                                 name="is_reserved"
                                 checked={formData.is_reserved}
                                 onChange={handleChange}
                             />                           
-                                               
+                         </div>                                      
                     </div>
                     <div className="form-group">
                         <label htmlFor='category'>Category:</label>

@@ -59,7 +59,6 @@ const Home = () => {
                     <div className="">
                         <PopularMovies searchVal={searchVal} filters={filters}/>
                     </div>
-
                 </div>
             </div>
            <Footer/>

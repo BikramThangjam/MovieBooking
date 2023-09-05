@@ -111,6 +111,7 @@ const ChangePassword = () => {
                             value={credential.password}
                             className="form-control form-control-sm"
                             onChange={handleChange}
+                            required
                           />
                         </div>
                       </div>
@@ -128,6 +129,7 @@ const ChangePassword = () => {
                             value={credential.confirmPassword}
                             className="form-control form-control-sm"
                             onChange={handleChange}
+                            required
                           />
                         </div>
                       </div>

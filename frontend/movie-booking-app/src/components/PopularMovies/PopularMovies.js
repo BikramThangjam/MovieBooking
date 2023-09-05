@@ -91,8 +91,8 @@ const PopularMovies = (props) => {
 
       {/* Pagination */}
       <div className="d-flex justify-content-center mt-3">
-        <nav aria-label="Page navigation">
-          <ul className="pagination">
+        <nav aria-label="Page navigation ">
+          <ul className="pagination ">
             <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
               <button
                 className="page-link"
