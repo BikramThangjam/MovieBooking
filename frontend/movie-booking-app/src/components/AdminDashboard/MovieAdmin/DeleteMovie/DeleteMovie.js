@@ -137,7 +137,6 @@ const DeleteMovie = () => {
                 className="form-control"
                 id="movieId"
                 onChange={movieIdHandleChange}
-                required
               />
             </div>
             <button

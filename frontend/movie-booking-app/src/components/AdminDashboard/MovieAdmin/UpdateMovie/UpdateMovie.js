@@ -141,7 +141,7 @@ useEffect(() => {
           <div className="form-group row">
             <label htmlFor="movieId" className="col-3 col-form-label">Enter Movie ID</label>
             <div className="col">
-              <input type="number" className="form-control" id="movieId" onChange={movieIdHandleChange}/>
+              <input type="number" className="form-control" id="movieId" onChange={movieIdHandleChange} required/>
             </div>
             <button type="submit" className="btn btn-success col-3">GET</button>
           </div>
