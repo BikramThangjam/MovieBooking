@@ -1,7 +1,4 @@
 
-.booking *{
-   font-size: 12px;
-}
 .booking-content p{
     margin: 0px 10px
  }
@@ -15,7 +12,15 @@
  }
 
  .booking-list{
-   max-height: 430px;
-   overflow-y: auto;
+   max-height: 480px;
+   overflow: auto;
+ }
+
+ .booking-list::-webkit-scrollbar{
+   display: none;
+ }
+
+ .booking-list * {
+   font-size: 14px;
  }
  

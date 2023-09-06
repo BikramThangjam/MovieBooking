@@ -26,7 +26,7 @@ const Home = () => {
             <LoginFormModel/>
             <Banner/>
             <div className="container movie-app p-0">                   
-                <div className="p-3">                     
+                <div className="px-5">                     
                     <MovieList category={'top_rated'} text={'TOP RATED'}/>          
                 </div>         
             </div> 
@@ -34,8 +34,7 @@ const Home = () => {
             {/* Search bar     */}
             <div className="container-fluid mt-5 mx-0 p-0">
                 <div className="w-50 mx-auto">
-                    <form className="d-flex justify-content-center align-items-center p-4" onSubmit={handleSubmit}>
-                        
+                    <form className="d-flex justify-content-center align-items-center p-4" onSubmit={handleSubmit}>                     
                         <input
                         type="text"
                         name="searchpanel"
