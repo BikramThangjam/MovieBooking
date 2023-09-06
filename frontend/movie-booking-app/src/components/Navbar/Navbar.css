@@ -27,7 +27,6 @@
 }
 
 .join-btn, .logout-btn {
-    width: 130px;
     height: 55px;
     margin: 10px;
     background: linear-gradient(90deg, #d835bd 0%, #515ada 100%);
@@ -55,7 +54,6 @@
 .logout-btn{
     background: linear-gradient(90deg, #131213 0%, #1e1e22 100%);
     border-radius: 0px;
-    width: 130px;
     height: 50px;
     font-size: 15px;
     font-weight: 600;

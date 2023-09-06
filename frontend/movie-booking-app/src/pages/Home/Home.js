@@ -25,7 +25,7 @@ const Home = () => {
         <>
             <LoginFormModel/>
             <Banner/>
-            <div className="container-fluid movie-app p-0">                   
+            <div className="container movie-app p-0">                   
                 <div className="p-3">                     
                     <MovieList category={'top_rated'} text={'TOP RATED'}/>          
                 </div>         

@@ -1,5 +1,5 @@
 .movie-app .row {
-    overflow-x: auto;
+    overflow-x: hidden;
     flex-wrap: nowrap;
   }
 

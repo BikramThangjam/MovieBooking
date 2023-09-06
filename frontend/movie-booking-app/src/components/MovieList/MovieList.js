@@ -1,10 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Movie from "./Movie/Movie";
+import "./MovieList.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import {
+  BsFillArrowLeftCircleFill,
+  BsFillArrowRightCircleFill,
+} from "react-icons/bs";
+
 const MovieList = (props) => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const carouselContainer = useRef();
+
+  const navigation = (dir) => {
+    const container = carouselContainer.current;
+
+    const scrollAmount =
+        dir === "left"
+            ? container.scrollLeft - (container.offsetWidth)
+            : container.scrollLeft + (container.offsetWidth);
+
+    container.scrollTo({
+        left: scrollAmount,
+        behavior: "smooth",
+    });
+};
 
   const getMoviesReq = async () => {
     const url = `http://127.0.0.1:8000/api/movies/filters/byCategory/?cat=${props.category}`;
@@ -48,16 +69,26 @@ const MovieList = (props) => {
   return (
     <>
       <p className="movie-cat mb-0 mt-5">{props.text}</p>
-
-      <div className="row">
-        {
-            isLoading 
-            ? 
-            <Loading />
-            : 
-            movies.map((movie, index) => <Movie movie={movie} key={index} />)
-        }
+      <div className="position-relative">
+        <BsFillArrowLeftCircleFill
+                  className="carouselLeftNav arrow"
+                  onClick={() => navigation("left")}
+              />
+        <BsFillArrowRightCircleFill
+                  className="carouselRighttNav arrow"
+                  onClick={() => navigation("right")}
+        />
+        <div className="row" ref={carouselContainer}>
+            {
+                isLoading 
+                ? 
+                <Loading />
+                : 
+                movies.map((movie, index) => <Movie movie={movie} key={index} />)
+            }
+          </div>
       </div>
+      
     </>
   );
 };
