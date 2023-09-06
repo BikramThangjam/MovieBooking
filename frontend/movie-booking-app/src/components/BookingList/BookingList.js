@@ -83,7 +83,7 @@ const BookingList = () => {
                         </div>
                       )
                     }
-                    <ul>
+                    <ul className="booking-list">
                       {
                           bookingList.map((booking, index)=> (
                           <li key={index} style={{listStyle: "none", padding:"0px 15px"}}>

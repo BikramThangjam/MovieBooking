@@ -1,12 +1,9 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Jost&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Lilita+One&display=swap');
 
-/* @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Oswald:wght@300;400&family=Quicksand&family=Sen:wght@500&family=Shadows+Into+Light&display=swap'); */
-/* @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Heebo&family=Oswald:wght@300;400&family=Quicksand&family=Sen:wght@500&family=Shadows+Into+Light&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Heebo&family=Oswald:wght@300;400&family=Quicksand&family=Sen:wght@500&family=Shadows+Into+Light&display=swap');
 *{
-  font-family: 'Quicksand', sans-serif; 
-  font-family: 'Heebo', sans-serif;
-  
- 
+  /* font-family: 'Jost', sans-serif; */
+  font-family: 'Kalam', cursive;
 }
 
 body{

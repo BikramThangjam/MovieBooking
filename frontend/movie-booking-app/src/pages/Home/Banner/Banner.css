@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Lilita+One&display=swap');
 
 .bannerImage{
     max-height: 650px;
@@ -61,8 +61,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 
+.banner-text *{
+    font-family: 'Kalam', cursive;
+}
 .banner-text>h1{
     font-weight: 900;
     font-size: 4rem;

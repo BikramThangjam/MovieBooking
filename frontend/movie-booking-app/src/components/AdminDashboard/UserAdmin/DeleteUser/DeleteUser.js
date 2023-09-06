@@ -143,7 +143,7 @@ const DeleteUser = () => {
                 className="form-control"
                 id="userId"
                 onChange={userIdHandleChange}
-                required
+                
               />
             </div>
             <button

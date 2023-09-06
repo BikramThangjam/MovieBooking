@@ -117,20 +117,20 @@ const UpdateProfile = () => {
                                     <div className="w-100 mx-auto">
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group row">
-                                                    <label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label col-form-label-sm text-dark">Fullname</label>
-                                                    <div className="col-sm-9">
+                                                    <label htmlFor="colFormLabelSm" className="col-sm-4 col-form-label col-form-label-sm text-dark">Fullname</label>
+                                                    <div className="col-sm-8">
                                                     <input type="text" name="name" value={updatedUserDetail.name} onChange={handleChange}  className="form-control form-control-sm" id="colFormLabelSm" placeholder={userDetail && userDetail.name } required/>
                                                     </div>
                                             </div>
                                             <div className="form-group row">
-                                                    <label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label col-form-label-sm text-dark">Username</label>
-                                                    <div className="col-sm-9">
+                                                    <label htmlFor="colFormLabelSm" className="col-sm-4 col-form-label col-form-label-sm text-dark">Username</label>
+                                                    <div className="col-sm-8">
                                                     <input type="text" name="username" value={updatedUserDetail.username} onChange={handleChange} className="form-control form-control-sm" id="colFormLabelSm" placeholder={userDetail && userDetail.username } required/>
                                                     </div>
                                             </div>
                                             <div className="form-group row">
-                                                <label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label col-form-label-sm text-dark">Email</label>
-                                                <div className="col-sm-9">
+                                                <label htmlFor="colFormLabelSm" className="col-sm-4 col-form-label col-form-label-sm text-dark">Email</label>
+                                                <div className="col-sm-8">
                                                 <input type="email" name="email" value={updatedUserDetail.email} onChange={handleChange} className="form-control form-control-sm" id="colFormLabelSm" placeholder={userDetail && userDetail.email } required/>
                                                 </div>
                                             </div>

@@ -102,7 +102,7 @@ const ChangePassword = () => {
                           htmlFor="password"
                           className="col-sm-5 col-form-label col-form-label-sm text-dark"
                         >
-                          Enter New Password
+                          New Password
                         </label>
                         <div className="col-sm-7">
                           <input
@@ -111,6 +111,7 @@ const ChangePassword = () => {
                             value={credential.password}
                             className="form-control form-control-sm"
                             onChange={handleChange}
+                            placeholder="Enter new password"
                             required
                           />
                         </div>
@@ -129,6 +130,7 @@ const ChangePassword = () => {
                             value={credential.confirmPassword}
                             className="form-control form-control-sm"
                             onChange={handleChange}
+                            placeholder="Confirm new password"
                             required
                           />
                         </div>

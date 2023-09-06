@@ -1,5 +1,7 @@
 
-
+.booking *{
+   font-size: 12px;
+}
 .booking-content p{
     margin: 0px 10px
  }
@@ -12,4 +14,8 @@
     margin-top: 50%;
  }
 
+ .booking-list{
+   max-height: 430px;
+   overflow-y: auto;
+ }
  
