@@ -181,7 +181,7 @@ useEffect(() => {
               seatData
               ? (
                 <form onSubmit={handleSubmit} className="main-form ">
-                  <div className="overflow-auto addMovieForm">
+                  <div className="overflow-auto seat-form">
 
                   <div className="form-group">
                       <label htmlFor="seat_no">Seat No</label>

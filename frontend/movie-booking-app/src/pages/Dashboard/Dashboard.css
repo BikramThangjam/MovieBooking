@@ -9,22 +9,34 @@
 
 .left-heading{
     font-size: 1.2rem;
-    padding: 20px 10px;
+    padding: 0.75rem 10px;
     background: #000000;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.menu-ul li{
+.navi-link{
+    text-decoration: none;
+    color: white;
+    padding: 0;
+}
+.menu-ul li, .nav-li .nav-item{
     list-style: none;
     padding: 15px 14px;
     cursor: pointer;
-    transition: 0.6s ease;
+    transition: 0.4s ease;
+
 }
-.menu-ul li:hover, .nav-li li:hover{
-    background-image: linear-gradient(to top, #b4b0c2 0%, #dad4ec 1%, #968386 100%);
-    color: #000000;
+
+.nav-li .nav-item{
+    padding: 0.9rem 2rem;
+    /* padding: 16px 25px; */
 }
+ .menu-ul li:hover, .nav-li li:hover{
+    background: rgba(240, 255, 255, 0.685);
+    color: black;
+}
+
 
 .main-content{
     background-image: linear-gradient(to right top, #0c1832, #101533, #161233, #1c0d32, #230630);
@@ -36,17 +48,14 @@
 }
 .nav-li li{
     padding: 10px 25px;
-    transition: 1s ease;
 }
-.nav-li .nav-link{
+/* .nav-li .nav-link{
     text-decoration: none;
     color: white;
     font-size: 13px;
     transition: 1s ease;
-} 
-.nav-li .nav-item:hover a{
-    color: black;
-}    
+}  */
+    
 
 
 

@@ -10,13 +10,8 @@ const SeatAdmin = () => {
 
                     <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                         <ul className="navbar-nav nav-li">
-                        <li className="nav-item active">
-                                <Link className="nav-link" to="add-seat">ADD SEAT</Link>
-                            </li>
-                            <li className="nav-item active">
-                                <Link className="nav-link" to="update-seat">UPDATE SEAT</Link>
-                            </li>
-                            
+                            <Link className="nav-link navi-link" to="add-seat"><li className="nav-item">Add Seat</li></Link>
+                            <Link className="nav-link navi-link" to="update-seat"><li className="nav-item">Update Seat</li></Link>
                         </ul>
                     </div>
             </nav>

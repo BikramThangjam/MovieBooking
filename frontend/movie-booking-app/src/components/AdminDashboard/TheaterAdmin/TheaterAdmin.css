@@ -2,11 +2,12 @@
     width: 45%;
     margin: auto;
 }
-.addMovieForm{   
+.theater-form{   
     max-height: 450px;
     margin-top: 20px;
 }
-.addMovieForm::-webkit-scrollbar{
+
+.theater-form::-webkit-scrollbar{
     display: none;
 }
 

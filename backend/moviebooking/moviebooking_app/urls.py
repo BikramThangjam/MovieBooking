@@ -25,8 +25,11 @@ urlpatterns = [
     path('movies/filters/byCategory/', MoviesFilterByCategory.as_view(), name='filter-movies-by-category'),
     path('movies/filters/byTitle/', MoviesFilterByTitle.as_view(), name='filter-movies-by-title'),
     
-    path('theater/add/', TheaterView.as_view(), name='add-theater'),
     path('theater/all/', TheaterView.as_view(), name='list-theater'),
+    path('theater/get/<int:id>/', TheaterViewAdmin.as_view(), name="get-theater-admin-only"),
+    path('theater/add/', TheaterViewAdmin.as_view(), name='add-theater-admin-only'),
+    path('theater/update/<int:id>/', TheaterViewAdmin.as_view(), name='update-theater-admin-only'),
+    path('theater/delete/<int:id>/', TheaterViewAdmin.as_view(), name='delete-theater-admin-only'),
     path('theaters/<int:movie_id>/', TheatersMovieView.as_view(), name='all-theaters-of-specific-movie'),
     
     path('seats/all/by_theater_movie_id/', SeatsTheaterMovieView.as_view(), name='all-seats-of-specific-theater'),

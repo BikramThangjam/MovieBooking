@@ -30,17 +30,25 @@ const TheaterList = () => {
   const formatMovieTiming = (timing)=>{
 
     const dateTimeString = timing;
-    const dateTime = new Date(dateTimeString);
+    // console.log("dateTimeString ",dateTimeString);
+
+    const isoStringWithoutOffset = dateTimeString.slice(0, 19);
+    // console.log("isoStringWithoutOffset ",isoStringWithoutOffset)
+
+    const dateTime = new Date(isoStringWithoutOffset);
+    // console.log("dateTime ", dateTime)
+    
 
     const dateFormatOptions = {
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
       };
       
       const timeFormatOptions = {
         hour: 'numeric',
         minute: 'numeric',
+        hours12: true,
       };
       
       const formattedDate = dateTime.toLocaleDateString('en-US', dateFormatOptions);
@@ -63,7 +71,7 @@ const TheaterList = () => {
 
   return (
     <div className="">
-      <h3 className="text-center display-4 pb-4">Available Theaters</h3>
+      <h3 className="text-center display-4 py-4">Available Theaters</h3>
       {loading ? (
         <p className="text-center" style={{color: "white"}}>Loading...</p>
       ) : (

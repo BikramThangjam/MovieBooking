@@ -29,6 +29,10 @@ import UserAdmin from './components/AdminDashboard/UserAdmin/UserAdmin';
 import CreateUser from './components/AdminDashboard/UserAdmin/CreateUser/CreateUser';
 import UpdateUser from './components/AdminDashboard/UserAdmin/UpdateUser/UpdateUser';
 import DeleteUser from './components/AdminDashboard/UserAdmin/DeleteUser/DeleteUser';
+import TheaterAdmin from './components/AdminDashboard/TheaterAdmin/TheaterAdmin';
+import AddTheater from './components/AdminDashboard/TheaterAdmin/AddTheater/AddTheater';
+import UpdateTheater from './components/AdminDashboard/TheaterAdmin/UpdateTheater/UpdateTheater';
+import DeleteTheater from './components/AdminDashboard/TheaterAdmin/DeleteTheater/DeleteTheater';
 
 
 function App() {
@@ -69,6 +73,12 @@ function App() {
               <Route index element={<AddSeat/>}/>
               <Route path="add-seat" element={<AddSeat/>}/>
               <Route path="update-seat" element={<UpdateSeat/>}/>
+            </Route>
+            <Route path="theater-admin/" element={<TheaterAdmin/>}>
+              <Route index element={<AddTheater/>}/>
+              <Route path="add-theater" element={<AddTheater/>}/>
+              <Route path="update-theater" element={<UpdateTheater/>}/>
+              <Route path="delete-theater" element={<DeleteTheater/>}/>
             </Route> 
           </Route>  
           <Route path="/*" element={<h2 className=' text-white text-center pt-5'> 104 <p className='text-white'>Page Not Found :(</p></h2>}/>

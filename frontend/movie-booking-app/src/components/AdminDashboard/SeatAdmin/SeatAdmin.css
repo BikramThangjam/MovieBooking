@@ -2,9 +2,13 @@
     width: 45%;
     margin: auto;
 }
-.addMovieForm{   
+.seat-form{   
     max-height: 450px;
     margin-top: 20px;
+}
+
+.seat-form::-webkit-scrollbar{
+    display: none;
 }
 
 .status-alert{

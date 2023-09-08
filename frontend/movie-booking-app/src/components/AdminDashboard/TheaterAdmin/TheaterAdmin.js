@@ -1,6 +1,6 @@
-import "./UserAdmin.css";
+import "./TheaterAdmin.css";
 import { Link, Outlet } from "react-router-dom";
-const UserAdmin = () => {
+const TheaterAdmin = () => {
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-bg p-0">                   
@@ -10,15 +10,9 @@ const UserAdmin = () => {
 
                     <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                         <ul className="navbar-nav nav-li">
-                            
-                                <Link className="nav-link navi-link" to="create-user"><li className="nav-item">Create User</li></Link>
-                           
-                            
-                                <Link className="nav-link navi-link" to="update-user"><li className="nav-item ">Update User</li></Link>
-                            
-                            
-                                <Link className="nav-link navi-link" to="delete-user"><li className="nav-item ">Delete User</li></Link>
-                            
+                            <Link className="nav-link navi-link" to="add-theater"><li className="nav-item ">Add Theater</li></Link>
+                            <Link className="nav-link navi-link" to="update-theater"><li className="nav-item ">Update Theater</li></Link>
+                            <Link className="nav-link navi-link" to="delete-theater"><li className="nav-item ">Delete Theater</li></Link>
                         </ul>
                     </div>
             </nav>
@@ -29,4 +23,4 @@ const UserAdmin = () => {
     )
 }
 
-export default UserAdmin;
+export default TheaterAdmin;

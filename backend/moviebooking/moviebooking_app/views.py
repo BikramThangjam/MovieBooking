@@ -315,8 +315,23 @@ class BulkCreateMovieView(APIView):
                 "data": serializer.data
             }, safe=False, status=status.HTTP_201_CREATED)
         return JsonResponse(serializer.errors, safe=False, status=status.HTTP_400_BAD_REQUEST)  
-
+    
 class TheaterView(APIView):
+    def get(self, req):
+        theater_list = Theater.objects.all()
+        serializer = TheaterSerializer(theater_list, many=True).data
+        return JsonResponse(serializer, safe=False, status=status.HTTP_200_OK)
+    
+class TheaterViewAdmin(APIView):
+    permission_classes = [IsAdminUser]
+    def get(self, req, id):
+        try:
+            theater = Theater.objects.get(id = id)
+            serializer = TheaterSerializer(theater)
+            return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
+        except Exception as e:
+            return JsonResponse({"message": "Theater not found"}, safe=False, status=status.HTTP_404_NOT_FOUND)
+        
     def post(self, req):
         serializer = TheaterSerializer(data=req.data)
         
@@ -328,10 +343,30 @@ class TheaterView(APIView):
             }, safe=False, status=status.HTTP_201_CREATED)        
         return JsonResponse(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
-    def get(self, req):
-        theater_list = Theater.objects.all()
-        serializer = TheaterSerializer(theater_list, many=True).data
-        return JsonResponse(serializer, safe=False, status=status.HTTP_200_OK)
+    def put(self, request, id):
+        try:
+            theater = Theater.objects.get(id=id)
+        except Theater.DoesNotExist:
+            return JsonResponse({"message": "Theater not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Deserialize request data using MovieSerializer
+        serializer = TheaterSerializer(theater, data=request.data,  partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse({"message": "Theater details updated successfully."}, status=status.HTTP_200_OK)
+
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, req, id):
+        try:
+            theater = Theater.objects.get(id=id)
+        except theater.DoesNotExist:
+            return JsonResponse({"message":"Theater not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        theater.delete()
+        return JsonResponse({"message": "Theater has been deleted"}, status=status.HTTP_204_NO_CONTENT)
+
     
 class TheatersMovieView(APIView):
     def get(self,req, movie_id):

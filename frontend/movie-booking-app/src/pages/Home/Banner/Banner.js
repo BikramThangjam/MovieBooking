@@ -5,6 +5,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import jsondata from "./data.json"
 import { useState } from "react"
 
+
+
 const Banner = () => {   
     const [popularMovies, setPopularMovies] = useState(jsondata)
   return (
@@ -21,21 +23,10 @@ const Banner = () => {
             <div className="bannerImage">
               <img src={`https://image.tmdb.org/t/p/original${movie && movie.backdrop_path}`}/>
             </div>
-            <div className="bannerImage__overlay">
-              <div className="bannerImage__title">
-                {movie ? movie.original_title : ""}
-              </div>
-              <div className="bannerImage__runtime">
-                {movie ? movie.release_date : ""}
-                <span className="bannerImage__rating">
-                  {movie ? movie.vote_average : ""}
-                  <i className="fas fa-star" />{" "}
-                </span>
-              </div>
-            </div>
+            
             <div className="banner-text">
                 <h1>BOOK YOUR <span style={{color: "rgb(236, 94, 113)"}}>MOVIE</span> TICKETS TODAY!!!</h1>
-                <p style={{color: "aqua"}}>Experience the thrill of the big screen with the latest blockbusters.</p>             
+                <p style={{color: "#f09322"}}>Experience the thrill of the big screen with the latest blockbusters.</p>             
             </div> 
           </div>
         ))}
