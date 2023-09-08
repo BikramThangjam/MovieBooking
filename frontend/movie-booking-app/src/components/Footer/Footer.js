@@ -83,7 +83,7 @@ const Footer = () => {
 
             </div>
 
-            <div className=" p-3 d-flex justify-content-around" style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}>
+            <div className=" p-3 d-flex justify-content-around footer-end">
                 <span className="fw-bold text-light">© 2023 Copyright </span> 
                 <Link className="text-white fs-6 " to="/">  BOLETO.com</Link>
             </div>
