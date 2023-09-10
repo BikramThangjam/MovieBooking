@@ -4,7 +4,7 @@ import {RotatingLines} from "react-loader-spinner";
 
 const UpdateUser = () => {
   // Define state variables to store movie data
-  const [userId, setUserId] = useState("")
+  const [username, setUsername] = useState("");
   const [show, setShow] = useState(false);
   const [token, setToken] = useState();
   const [isLoading, setIsLoading] = useState(false)
@@ -22,8 +22,8 @@ const UpdateUser = () => {
     is_superuser: false
   });
 
-  const userIdHandleChange = (e) => {
-    setUserId(e.target.value);
+  const usernameHandleChange = (e) => {
+    setUsername(e.target.value);
   }
 
   const GetUserDetail = async (e) => {
@@ -31,7 +31,7 @@ const UpdateUser = () => {
     // Starting the initial laoding
     setIsLoading(true);
 
-    const apiUrl = `http://127.0.0.1:8000/api/users/getUser/${userId}/`
+    const apiUrl = `http://127.0.0.1:8000/api/users/getUser/?username=${username}`;
     const headers = {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ const UpdateUser = () => {
         headers: headers,
     }
 
-    if(!userId){
+    if(!username){
       setIsLoading(false);
       setResponseData({
         responseText: "Please enter the User Id",
@@ -61,7 +61,8 @@ const UpdateUser = () => {
         const data = await response.json();    
         if (response.ok) { 
           setIsLoading(false);                 
-          setUserData(data)                            
+          setUserData(data);         
+          
         } else {
           setIsLoading(false);
           setUserData();
@@ -99,8 +100,7 @@ const IsAdminHandleChange = (e)=>{
  
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
-    const apiUrl = ` http://127.0.0.1:8000/api/users/updateUser/${userId}/`; 
+    const apiUrl = ` http://127.0.0.1:8000/api/users/updateUser/${userData.id}/`; 
     const headers = {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json',
@@ -171,11 +171,11 @@ useEffect(() => {
         <hr className="bg-white w-50 mx-auto" />
         <form className="w-50 mx-auto" onSubmit={GetUserDetail}>
           <div className="form-group row">
-            <label htmlFor="seatId" className="col-3 col-form-label">Enter User ID</label>
-            <div className="col">
-              <input type="number" className="form-control" id="movieId" onChange={userIdHandleChange}/>
+            <div className="col-6">
+              <input type="text" className="form-control" onChange={usernameHandleChange} placeholder="Enter username..."/>
             </div>
-            <button type="submit" className="btn btn-success col-3">GET</button>
+            <div className="col-3"></div>
+            <button type="submit" className="btn btn-success col-2">GET</button>
           </div>
         </form>
         <hr className="bg-white w-50 mx-auto"/>

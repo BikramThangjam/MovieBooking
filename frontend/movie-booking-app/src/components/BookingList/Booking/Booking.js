@@ -22,8 +22,7 @@ const Booking = (props) => {
   }
 
   const formatMovieTiming = (timing)=>{
-
-    const dateTimeString = timing;
+    const dateTimeString = timing.slice(0, 19);
     const dateTime = new Date(dateTimeString);
 
      // Get day, month, and year from the date

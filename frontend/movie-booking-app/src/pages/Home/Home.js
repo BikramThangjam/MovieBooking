@@ -3,7 +3,7 @@ import MovieList from "../../components/MovieList/MovieList";
 import Banner from "./Banner/Banner";
 import LoginFormModel from "../../components/LoginFormModel/LoginFormModel";
 import PopularMovies from "../../components/PopularMovies/PopularMovies";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import Filter from "../../components/Filter/Filter";
 import MyContext from "../../MyContext";
 import Footer from "../../components/Footer/Footer";
@@ -11,8 +11,9 @@ import Footer from "../../components/Footer/Footer";
 const Home = () => {
     const [searchText, setSearchText] = useState("")
     const [searchVal, setSearchVal] = useState("");
-    const {filters} = useContext(MyContext);
-    
+    const {filters,isModalVisible, setIsModalVisible} = useContext(MyContext);
+    const buttonRef = useRef(null);
+
     const handleChange = (e) =>{
         setSearchText(e.target.value)
     }
@@ -21,9 +22,27 @@ const Home = () => {
         setSearchVal(searchText);
 
     }
+
+    useEffect(()=>{
+        let token = localStorage.getItem('access');
+
+        if(!token){
+            // Automatically show the modal when the user is not logged in
+            setIsModalVisible(true);
+            if(buttonRef.current){
+                // console.log("buttonRef--",buttonRef)
+                // console.log("button clicked..")
+                buttonRef.current.click()  
+            }
+            
+            //                
+        }
+
+    },[isModalVisible])
+
     return (
         <>
-            <LoginFormModel/>
+            {isModalVisible && <LoginFormModel buttonRef={buttonRef}/>}
             <Banner/>
             <div className="container movie-app p-0">                   
                 <div className="px-5">                     

@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithToken } from "../../../API/Interceptor";
 import {RotatingLines} from "react-loader-spinner";
-
+import "./UpdateMovie.css";
 const UpdateMovie = () => {
   // Define state variables to store movie data
+  const [searchText, setSearchText] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectedSuggestion, setSelectedSuggestion] = useState('');
+  const [visibleSuggestions, setVisibleSuggestions] = useState();
+
   const [movieId, setMovieId] = useState()
   const [show, setShow] = useState(false);
   const [token, setToken] = useState();
@@ -25,24 +30,51 @@ const UpdateMovie = () => {
     release_date: "",
   });
 
-  const movieIdHandleChange = (e) => {
-    setMovieId(e.target.value);
-  }
+  const movieHandleChange = async (e) => {
+    const text = e.target.value;
+    setSearchText(text);
+    setSelectedSuggestion(text)
+    if(text.length > 3) {      
+      try{
+           // Send a request to your backend to fetch movie name suggestions based on 'text'
+        // Fetching all the movies having similar title
+        const res = await fetch(`http://127.0.0.1:8000/api/movies/filters/byTitle/?title=${text}`)
+        const data = await res.json()
+        
+        if (res.ok){
+          // console.log("data length ", data.data.length)
+          setSuggestions(data.data);
+          setVisibleSuggestions(true);
+        }
+  
+      }catch(error){
+        console.error(error);
+      }
+    }
+      
+  };
+
+  const handleSuggestionClick = (movie) => {
+    // Set the selected suggestion in the input field
+    setSelectedSuggestion(movie.title);
+    setVisibleSuggestions(prevState => !prevState);
+  };
 
   const GetMovieDetail = async (e) => {
     e.preventDefault();
     // Starting the initial laoding
-    setIsLoading(true);
-
-    const apiUrl = `http://127.0.0.1:8000/api/movies/${movieId}/`
+    setIsLoading(true); 
+    // Fetching details of a specific movie
+    const apiUrl = `http://127.0.0.1:8000/api/movies/byTitle/?title=${selectedSuggestion}`
     try {
         const response = await fetch(apiUrl)  
         const data = await response.json();    
         if (response.ok) { 
-          setIsLoading(false);         
+          setIsLoading(false);       
           // mapping only the genre ids from response
           data["genre"] = data.genre.map(gen => gen.id);
-          setMovieData(data)                            
+          setMovieData(data)
+          setMovieId(data.id)                            
         } else {
           setMovieData();
           setIsLoading(false);
@@ -135,16 +167,39 @@ useEffect(() => {
         )}
       </div>
       <div className="container">
-        <h1 className="text-center mt-3">Update Movie</h1>
+        
         <hr className="bg-white w-50 mx-auto" />
         <form className="w-50 mx-auto" onSubmit={GetMovieDetail}>
           <div className="form-group row">
-            <label htmlFor="movieId" className="col-3 col-form-label">Enter Movie ID</label>
-            <div className="col">
-              <input type="number" className="form-control" id="movieId" onChange={movieIdHandleChange} required/>
+            <div className="col-6">
+              <input
+                type="text"
+                className="form-control"
+                id="movie_title"
+                name="movie_title"
+                onChange={movieHandleChange}
+                value={selectedSuggestion || searchText} // Use selected suggestion if available
+                placeholder="Enter movie title..."
+                required
+              />
             </div>
+            <div className="col-3"></div>
             <button type="submit" className="btn btn-success col-3">GET</button>
           </div>
+          {/* Display movie name suggestions */}
+          <ul className="suggestion--ul">
+            {
+              visibleSuggestions && (
+                  suggestions.length !== 0 ? 
+                    suggestions.map((movie, index) => (
+                        <li className="suggestion--list" key={index} onClick={() => handleSuggestionClick(movie)}>
+                          {movie.title.slice(0,30) + "..."}
+                        </li>
+                      )):
+                      <li>No result...</li>
+              )         
+            }
+          </ul>
         </form>
         <hr className="bg-white w-50 mx-auto"/>
         {

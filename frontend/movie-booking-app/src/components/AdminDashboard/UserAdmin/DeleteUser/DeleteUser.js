@@ -3,7 +3,8 @@ import { fetchWithToken } from "../../../API/Interceptor";
 
 const DeleteUser = () => {
   
-  const [userId, setUserId] = useState("");
+  const [username, serUsername] = useState("");
+  const [userId, setuserId] = useState();
   const [showAlert, setShowAlert] = useState(false);
   const [token, setToken] = useState("");
   const [isFound, setIsFound] = useState(false);
@@ -13,8 +14,8 @@ const DeleteUser = () => {
   });
 
 
-  const userIdHandleChange = (e) => {
-    setUserId(e.target.value);
+  const usernameHandleChange = (e) => {
+    serUsername(e.target.value);
   };
 
   const handleDelete = async () => {
@@ -50,7 +51,7 @@ const DeleteUser = () => {
   };
 
   const handleConfirmDelete = async () => {
-    const getUserAPi = `http://127.0.0.1:8000/api/users/getUser/${userId}/`;
+    const getUserAPi = `http://127.0.0.1:8000/api/users/getUser/?username=${username}`;
     const headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -60,7 +61,7 @@ const DeleteUser = () => {
         headers: headers,
       };
 
-    if (!userId) {
+    if (!username) {
       // Show an alert if movieId is not provided
       setResponseData({
         responseText: "Please enter a User ID.",
@@ -78,8 +79,10 @@ const DeleteUser = () => {
 
       if (response.ok) {
         // If the user is found, show the delete confirmation modal
+        const data = await response.json();
         setShowAlert(false);
         setIsFound(true);
+        setuserId(data.id);
       } else if (response.status === 404) {
         // If the user is not found, display an alert
         setResponseData({
@@ -134,18 +137,15 @@ const DeleteUser = () => {
           }}>
 
           <div className="form-group row">
-            <label htmlFor="movieId" className="col-3 col-form-label">
-              Enter User ID
-            </label>
-            <div className="col">
+            <div className="col-6">
               <input
-                type="number"
+                type="text"
                 className="form-control"
-                id="userId"
-                onChange={userIdHandleChange}
-                
+                onChange={usernameHandleChange}
+                placeholder="Enter username..."
               />
             </div>
+            <div className="col-3"></div>
             <button
               className="btn btn-danger col-3"
               data-toggle="modal"

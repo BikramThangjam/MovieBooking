@@ -84,9 +84,10 @@ class UserProfileView(APIView):
 class UserAdminView(APIView):
     permission_classes = [IsAdminUser] 
 
-    def get(self, req, user_id):
+    def get(self, req):
         try:
-            user = User.objects.get(id = user_id)
+            username = req.GET.get('username', None)
+            user = User.objects.get(username = username)
             serializer = UserSerializer(user)
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
         except Exception as e:
@@ -234,11 +235,22 @@ class MoviesFilterByTitle(APIView):
             "current_page": page.number,
             "data": serializer.data,
         }, safe=False, status=status.HTTP_200_OK)
-    
+
 class MovieDetailsView(APIView):
-    def get(self, req, movie_id):
+    def get(self, req, id):
         try:
-            movie = Movie.objects.get(id = movie_id)
+            movie = Movie.objects.get(id = id)
+            serializer = MovieSerializer(movie)
+            return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
+        except Movie.DoesNotExist:
+            return JsonResponse({"message":"Movie not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    
+class MovieDetailsByTitleView(APIView):
+    def get(self, req):
+        title = req.GET.get('title', None)
+        try:
+            movie = Movie.objects.get(title__icontains = title)
             serializer = MovieSerializer(movie)
             return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
         except Movie.DoesNotExist:
@@ -321,6 +333,17 @@ class TheaterView(APIView):
         theater_list = Theater.objects.all()
         serializer = TheaterSerializer(theater_list, many=True).data
         return JsonResponse(serializer, safe=False, status=status.HTTP_200_OK)
+
+class TheatersByTitleView(APIView):
+    def get(self, req):
+        theater_name = req.GET.get('name', None)
+        try:
+            theater = Theater.objects.filter(name__icontains = theater_name)
+            serializer = TheaterSerializer(theater, many=True)
+            return JsonResponse(serializer.data, safe=False, status=status.HTTP_200_OK)
+        except Theater.DoesNotExist:
+            return JsonResponse({"message":"Theater not found"}, status=status.HTTP_404_NOT_FOUND)
+
     
 class TheaterViewAdmin(APIView):
     permission_classes = [IsAdminUser]

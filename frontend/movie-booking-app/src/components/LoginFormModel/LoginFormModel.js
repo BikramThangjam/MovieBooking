@@ -16,14 +16,14 @@ const LoginSchema = Yup.object().shape({
     password: Yup.string().required("Password cannot be blank."),
 });
 
-const LoginFormModel = () => {
-    const {setIsLoggedIn, isModalVisible, setIsModalVisible, setIsAdmin } = useContext(MyContext);
+const LoginFormModel = ({buttonRef}) => {
+    const {setIsLoggedIn, isModalVisible, setIsModalVisible } = useContext(MyContext);
     const [responseData, setResponseData] = useState({
         responseText: "",
         responseClass: "",
     });
 
-    const buttonRef = useRef(null);
+    
     const modalRef = useRef(null);
 
     const navigate = useNavigate();
@@ -88,17 +88,18 @@ const LoginFormModel = () => {
         setSubmitting(false);
     };
     
-    useEffect(()=>{
-        let token = localStorage.getItem('access');
+    // useEffect(()=>{
+    //     let token = localStorage.getItem('access');
 
-        if(!token){
-            // Automatically show the modal when the user is not logged in
-            setIsModalVisible(true);
-            buttonRef.current.click() 
-                     
-        }
+    //     if(!token){
+    //         // Automatically show the modal when the user is not logged in
+    //         setIsModalVisible(true);
+    //         if(buttonRef){
+    //             buttonRef.current.click() 
+    //         }                  
+    //     }
 
-    },[isModalVisible])
+    // },[isModalVisible])
 
 
     return (

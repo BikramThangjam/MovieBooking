@@ -3,6 +3,14 @@ import { fetchWithToken } from "../../../API/Interceptor";
 
 const DeleteTheater = () => {
   // Define state variables to store movie data
+  const [searchText, setSearchText] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectedSuggestion, setSelectedSuggestion] = useState({
+        id: '',
+        name: '',
+      });
+  const [visibleSuggestions, setVisibleSuggestions] = useState();
+
   const [theaterId, setTheaterId] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [token, setToken] = useState("");
@@ -13,13 +21,50 @@ const DeleteTheater = () => {
   });
 
 
-  const theaterIdHandleChange = (e) => {
-    setTheaterId(e.target.value);
+  const theaterHandleChange = async (e) => {
+    const text = e.target.value;
+    setSearchText(text);
+    setSelectedSuggestion(prev=>{
+        return {
+            ...prev,
+            name : text
+        }
+    })
+    if(text.length > 3) {      
+      try{
+           // Send a request to your backend to fetch movie name suggestions based on 'text'
+        // Fetching all the movies having similar title
+        const res = await fetch(`http://127.0.0.1:8000/api/theaters/byName/?name=${text}`)
+        const data = await res.json()
+        
+        if (res.ok){
+          setSuggestions(data);
+          setVisibleSuggestions(true);
+        }
+  
+      }catch(error){
+        console.error(error);
+      }
+    }
+      
   };
+
+  const handleSuggestionClick = (theater) => {
+    // Set the selected suggestion in the input field
+    setSelectedSuggestion(prev=>{
+        return {
+            ...prev,
+            id: theater.id,
+            name: theater.name
+        }
+    });
+    setVisibleSuggestions(prevState => !prevState);
+  };
+
 
   const handleDelete = async () => {
     // console.log("handleDelete function is executing..");
-    const deleteApiUrl = `http://127.0.0.1:8000/api/theater/delete/${theaterId}/`;
+    const deleteApiUrl = `http://127.0.0.1:8000/api/theater/delete/${selectedSuggestion.id}/`;
     const headers = {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -50,8 +95,8 @@ const DeleteTheater = () => {
   };
 
   const handleConfirmDelete = async () => {
-    // console.log("HandleConfirmDelete function is executing...");
-    const getTheaterUrl = `http://127.0.0.1:8000/api/theater/get/${theaterId}/`;
+    console.log("Delete theater button clicked..")
+    const getTheaterUrl = `http://127.0.0.1:8000/api/theater/get/${selectedSuggestion.id}/`;
     const headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -60,19 +105,6 @@ const DeleteTheater = () => {
         method: "GET",
         headers: headers,
       };
-
-    if (!theaterId) {
-      // Show an alert if movieId is not provided
-      setResponseData({
-        responseText: "Please enter a Movie ID.",
-        responseClass: "alert alert-danger alert-dismissible fade show",
-      });
-      setShowAlert(true);
-      setTimeout(() => {
-        setShowAlert(false);
-      }, 1300);
-      return;
-    }
 
     try {
       const response = await fetchWithToken(getTheaterUrl,options );
@@ -135,17 +167,19 @@ const DeleteTheater = () => {
           }}>
 
           <div className="form-group row">
-            <label htmlFor="movieId" className="col-3 col-form-label">
-              Enter Theater ID
-            </label>
-            <div className="col">
+            <div className="col-6">
               <input
-                type="number"
-                className="form-control"
-                id="movieId"
-                onChange={theaterIdHandleChange}
+                  type="text"
+                  className="form-control"
+                  id="theater_name"
+                  name="theater_name"
+                  onChange={theaterHandleChange}
+                  value={selectedSuggestion.name || searchText} // Use selected suggestion if available
+                  placeholder="Enter theater name..."
+                  required
               />
             </div>
+            <div className="col-3"></div>
             <button
               className="btn btn-danger col-3"
               data-toggle="modal"
@@ -155,6 +189,21 @@ const DeleteTheater = () => {
               Delete Theater
             </button>
           </div>
+
+          {/* Display movie name suggestions */}
+          <ul className="suggestion--ul">
+                        {
+                        visibleSuggestions && (
+                            suggestions.length !== 0 ? 
+                                suggestions.map((theater, index) => (
+                                    <li className="suggestion--list" key={index} onClick={() => handleSuggestionClick(theater)}>
+                                        {theater.name.length > 30 ? theater.name.slice(0,30) + "..." : theater.name}, {theater.city}, {theater.movie_timing.slice(0,16)} 
+                                    </li>
+                                )):
+                                <li>No result...</li>
+                            )         
+                        }
+                    </ul>
         </form>
         {/* Model for Delete Account Confirmation */}
         {
@@ -182,8 +231,7 @@ const DeleteTheater = () => {
                     </button>
                   </div>
                   <div className="modal-body text-dark">
-                    Are you sure you want to delete the theater associated with id: {theaterId}? This action cannot
-                    be undone.
+                    Are you sure you want to delete this theater? This action cannot be undone.
                   </div>
                   <div className="modal-footer">
                     <button

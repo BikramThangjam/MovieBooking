@@ -4,14 +4,22 @@ import {RotatingLines} from "react-loader-spinner";
 
 const UpdateTheater = () =>{
       // Define state variables to store movie data
-  const [theaterId, setTheaterId] = useState()
-  const [show, setShow] = useState(false);
-  const [token, setToken] = useState();
-  const [isLoading, setIsLoading] = useState(false)
-  const [responseData, setResponseData] = useState({
-    responseText:"",
-    responseClass:""
-});
+      const [searchText, setSearchText] = useState('');
+      const [suggestions, setSuggestions] = useState([]);
+      const [selectedSuggestion, setSelectedSuggestion] = useState({
+        id: '',
+        name: '',
+      });
+      const [visibleSuggestions, setVisibleSuggestions] = useState();
+
+    const [theaterId, setTheaterId] = useState()
+    const [show, setShow] = useState(false);
+    const [token, setToken] = useState();
+    const [isLoading, setIsLoading] = useState(false)
+    const [responseData, setResponseData] = useState({
+        responseText:"",
+        responseClass:""
+    });
   const [theaterData, setTheaterData] = useState({
     movie: '',
     name: '',
@@ -21,16 +29,52 @@ const UpdateTheater = () =>{
     movie_timing: '2023-09-20T18:00:00Z',
   });
 
-  const theaterIdHandleChange = (e) => {
-    setTheaterId(e.target.value);
-  }
+  const theaterHandleChange = async (e) => {
+    const text = e.target.value;
+    setSearchText(text);
+    setSelectedSuggestion(prev=>{
+        return {
+            ...prev,
+            name : text
+        }
+    })
+    if(text.length > 3) {      
+      try{
+           // Send a request to your backend to fetch movie name suggestions based on 'text'
+        // Fetching all the movies having similar title
+        const res = await fetch(`http://127.0.0.1:8000/api/theaters/byName/?name=${text}`)
+        const data = await res.json()
+        
+        if (res.ok){
+          setSuggestions(data);
+          setVisibleSuggestions(true);
+        }
+  
+      }catch(error){
+        console.error(error);
+      }
+    }
+      
+  };
+
+  const handleSuggestionClick = (theater) => {
+    // Set the selected suggestion in the input field
+    setSelectedSuggestion(prev=>{
+        return {
+            ...prev,
+            id: theater.id,
+            name: theater.name
+        }
+    });
+    setVisibleSuggestions(prevState => !prevState);
+  };
 
   const GetTheaterDetail = async (e) => {
     e.preventDefault();
     // Starting the initial laoding
     setIsLoading(true);
 
-    const apiUrl = `http://127.0.0.1:8000/api/theater/get/${theaterId}/`
+    const apiUrl = `http://127.0.0.1:8000/api/theater/get/${selectedSuggestion.id}/`
     const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -40,27 +84,13 @@ const UpdateTheater = () =>{
             headers: headers,
         }
 
-        if(!theaterId){
-            setIsLoading(false);
-            setResponseData({
-              responseText: "Please enter the theater Id",
-              responseClass: "alert alert-danger alert-dismissible fade show"
-            });
-            setShow(true)
-      
-            setTimeout(()=>{
-              setShow(false)
-            },3000)
-      
-            return
-          }
-      
     try {
         const response = await fetchWithToken(apiUrl, options)  
         const data = await response.json();    
         if (response.ok) { 
           setIsLoading(false);
           setTheaterData(data)
+          setTheaterId(data.id)
         //   console.log("movie_timing--",data.movie_timing)                            
         } else {
           setTheaterData();
@@ -139,8 +169,8 @@ const formatMovieTiming = (timing)=>{
         if (storedToken) {
         setToken(storedToken);
         }
-        console.log("movie_timing-", theaterData.movie_timing)
-        console.log("formatted movie_timing-",formatMovieTiming(theaterData.movie_timing))
+        // console.log("movie_timing-", theaterData.movie_timing)
+        // console.log("formatted movie_timing-",formatMovieTiming(theaterData.movie_timing))
     }, []);
 
     return (
@@ -162,16 +192,38 @@ const formatMovieTiming = (timing)=>{
             )}
             </div>
             <div className="container">
-                <h1 className="text-center mt-3">Update Theater</h1>
                 <hr className="bg-white w-50 mx-auto" />
                 <form className="w-50 mx-auto" onSubmit={GetTheaterDetail}>
                     <div className="form-group row">
-                    <label htmlFor="seatId" className="col-3 col-form-label">Enter Theater ID</label>
-                    <div className="col">
-                        <input type="number" className="form-control" id="movieId" onChange={theaterIdHandleChange}/>
+                        <div className="col-6">
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="theater_name"
+                                name="theater_name"
+                                onChange={theaterHandleChange}
+                                value={selectedSuggestion.name || searchText} // Use selected suggestion if available
+                                placeholder="Enter theater name..."
+                                required
+                            />
+                        </div>
+                        <div className="col-3"></div>
+                        <button type="submit" className="btn btn-success col-3">GET</button>
                     </div>
-                    <button type="submit" className="btn btn-success col-3">GET</button>
-                    </div>
+                    {/* Display movie name suggestions */}
+                    <ul className="suggestion--ul">
+                        {
+                        visibleSuggestions && (
+                            suggestions.length !== 0 ? 
+                                suggestions.map((theater, index) => (
+                                    <li className="suggestion--list" key={index} onClick={() => handleSuggestionClick(theater)}>
+                                        {theater.name.length > 30 ? theater.name.slice(0,30) + "..." : theater.name}, {theater.city}, {formatMovieTiming(theater.movie_timing)} 
+                                    </li>
+                                )):
+                                <li>No result...</li>
+                            )         
+                        }
+                    </ul>
                 </form>
                 <hr className="bg-white w-50 mx-auto"/>
             {

@@ -6,7 +6,7 @@ urlpatterns = [
     path('users/profile/',UserProfileView.as_view(), name='get-user-details' ),
     path('users/profile/update/',UserProfileView.as_view(), name='update-user-details'),
     path('users/profile/delete/',UserProfileView.as_view(), name='remove-user' ),
-    path('users/getUser/<int:user_id>/', UserAdminView.as_view(), name="get-user-details-admin-only"),
+    path('users/getUser/', UserAdminView.as_view(), name="get-user-details-admin-only"),
     path('users/updateUser/<int:user_id>/', UserAdminView.as_view(), name="update-user-details-admin-only"),
     path('users/deleteUser/<int:user_id>/', UserAdminView.as_view(), name="delete-user-admin-only"),
 
@@ -16,7 +16,8 @@ urlpatterns = [
 
     path('genres/all/',GenresView.as_view(),name='list-genres'),
     path('movies/all/', MoviesView.as_view(), name='list-movies'),
-    path('movies/<int:movie_id>/', MovieDetailsView.as_view(), name='details-of-a-specific-movie'),
+    path('movies/<int:id>/', MovieDetailsView.as_view(), name='movie-details'),
+    path('movies/byTitle/', MovieDetailsByTitleView.as_view(), name='details-of-a-specific-movie'),
     path('movies/add/', MovieViewAdmin.as_view(), name='add-movie-admin-only'),
     path('movies/bulkadd/', BulkCreateMovieView.as_view(), name='bulk-add-movies'),
     path('movies/update/<int:id>/', MovieViewAdmin.as_view(), name='update-movie-admin-only'),
@@ -26,6 +27,7 @@ urlpatterns = [
     path('movies/filters/byTitle/', MoviesFilterByTitle.as_view(), name='filter-movies-by-title'),
     
     path('theater/all/', TheaterView.as_view(), name='list-theater'),
+    path('theaters/byName/', TheatersByTitleView.as_view(), name='fetch-theaters-by-name'),
     path('theater/get/<int:id>/', TheaterViewAdmin.as_view(), name="get-theater-admin-only"),
     path('theater/add/', TheaterViewAdmin.as_view(), name='add-theater-admin-only'),
     path('theater/update/<int:id>/', TheaterViewAdmin.as_view(), name='update-theater-admin-only'),

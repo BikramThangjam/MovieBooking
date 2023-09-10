@@ -1,0 +1,15 @@
+.suggestion--ul{
+    max-height: 50px;
+    overflow-y: auto;
+}
+
+.suggestion--list{
+    list-style: none; 
+    cursor:pointer;
+    background-color:#0e2345;
+    padding: 0.3rem;
+}
+
+.suggestion--list:hover{
+    background-color: rgba(240, 255, 255, 0.301);
+}
