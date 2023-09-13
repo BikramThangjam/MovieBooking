@@ -1,5 +1,5 @@
 
-import { useState, useContext, useRef } from "react";
+import { useState,useEffect, useContext, useRef } from "react";
 import { Link, useNavigate} from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -17,7 +17,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 const LoginFormModel = ({buttonRef}) => {
-    const {setIsLoggedIn, isModalVisible, setIsModalVisible } = useContext(MyContext);
+    const {isLoggedIn, setIsLoggedIn, isModalVisible, setIsModalVisible } = useContext(MyContext);
     const [responseData, setResponseData] = useState({
         responseText: "",
         responseClass: "",
@@ -42,7 +42,7 @@ const LoginFormModel = ({buttonRef}) => {
             // Setting isSubmitting to true to indicate the submission is starting
             setSubmitting(true);
 
-            const response = await fetch("http://43.204.238.53:8000/api/auth/login/", {
+            const response = await fetch("http://127.0.0.1:8000/api/auth/login/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -88,18 +88,18 @@ const LoginFormModel = ({buttonRef}) => {
         setSubmitting(false);
     };
     
-    // useEffect(()=>{
-    //     let token = localStorage.getItem('access');
+    useEffect(()=>{
+        // let token = localStorage.getItem('access');
 
-    //     if(!token){
-    //         // Automatically show the modal when the user is not logged in
-    //         setIsModalVisible(true);
-    //         if(buttonRef){
-    //             buttonRef.current.click() 
-    //         }                  
-    //     }
+        if(!isLoggedIn){
+            // Automatically show the modal when the user is not logged in
+            setIsModalVisible(true);
+            if(buttonRef){
+                buttonRef.current.click() 
+            }                  
+        }
 
-    // },[isModalVisible])
+    },[isLoggedIn,isModalVisible])
 
 
     return (

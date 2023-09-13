@@ -13,14 +13,18 @@ const Navbar = () => {
 
     useEffect(()=>{
         let token = localStorage.getItem("access");
-        const isadmin = JSON.parse(localStorage.getItem("isAdmin").toLowerCase()); // Converted to boolean
-        setIsAdmin(isadmin)
+        const isUserAdmin = JSON.parse(localStorage.getItem("isAdmin").toLowerCase());
+        if(isUserAdmin){
+            setIsAdmin(isUserAdmin);
+        }else{
+            localStorage.setItem("isAdmin",isAdmin);
+        }
         if(!token){
             setIsLoggedIn(false);
         }else {
             setIsLoggedIn(true);
         }
-    }, [isLoggedIn] );
+    }, [isLoggedIn, isAdmin] );
 
 
     const onLogoutHandler = () => {

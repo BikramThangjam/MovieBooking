@@ -19,7 +19,7 @@ const LoginSchema = Yup.object().shape({
   });
 
 const Login = ()=>{
-    const {setIsLoggedIn, setIsAdmin} = useContext(MyContext);
+    const {setIsLoggedIn} = useContext(MyContext);
     const [responseData, setResponseData] = useState({
         responseText: "" ,
         responseClass: "",
