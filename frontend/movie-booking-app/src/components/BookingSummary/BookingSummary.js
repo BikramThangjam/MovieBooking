@@ -5,7 +5,7 @@ import { fetchWithToken } from "../API/Interceptor";
 import { useNavigate } from "react-router-dom";
 
 const BookingSummary = () => {
-    const { summary, setSummary } = useContext(MyContext);
+    const { summary } = useContext(MyContext);
     const [data, setData] = useState()
     const [token, setToken] = useState();
     const navigate = useNavigate();

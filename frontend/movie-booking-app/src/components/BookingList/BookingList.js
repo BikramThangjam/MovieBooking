@@ -5,7 +5,6 @@ import { fetchWithToken } from "../API/Interceptor";
 import {RotatingLines} from "react-loader-spinner";
 
 const BookingList = () => {
-    const [token, setToken] = useState();
     const [bookingList, setBookingList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showSuccess, setShowSuccess] = useState(false)
@@ -46,7 +45,6 @@ const BookingList = () => {
     useEffect(() => {  
       const storedToken = localStorage.getItem('access');
       if (storedToken) {
-        setToken(storedToken);
         fetchBookingList(storedToken);
       }
     }, []); 

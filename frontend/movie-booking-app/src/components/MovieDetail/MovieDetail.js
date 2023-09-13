@@ -40,7 +40,7 @@ const MovieDetail = () => {
                     <div className="movie__intro">
                         {   
                             movieDetail 
-                            ? <img className="movie__backdrop" src={movieDetail.image} /> 
+                            ? <img className="movie__backdrop" src={movieDetail.image} alt="backdrop"/> 
                             : <Skeleton height={500}/> 
                         }
                     </div>
@@ -49,7 +49,7 @@ const MovieDetail = () => {
                             <div className="movie__posterBox">
                                 {
                                     movieDetail
-                                    ? <img className="movie__poster" src={movieDetail.image} />
+                                    ? <img className="movie__poster" src={movieDetail.image} alt="poster"/>
                                     : <Skeleton width={300} height={400}/>
                                 }
                                 

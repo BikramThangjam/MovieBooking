@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import LoginFormModel from '../components/LoginFormModel/LoginFormModel';
 import { useContext } from 'react';
 import MyContext from '../MyContext';

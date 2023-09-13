@@ -11,7 +11,6 @@ const DeleteTheater = () => {
       });
   const [visibleSuggestions, setVisibleSuggestions] = useState();
 
-  const [theaterId, setTheaterId] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [token, setToken] = useState("");
   const [isFound, setIsFound] = useState(false);

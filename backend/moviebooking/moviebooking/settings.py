@@ -87,6 +87,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'moviebookingDB',
+        "ENFORCE_SCHEMA": False,
         'CLIENT': {
             'host': 'mongodb+srv://tbsingh:Tbsingh1234@cluster0.0knle2s.mongodb.net/',          
         }
