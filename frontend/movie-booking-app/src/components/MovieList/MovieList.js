@@ -28,7 +28,7 @@ const MovieList = (props) => {
 };
 
   const getMoviesReq = async () => {
-    const url = `http://127.0.0.1:8000/api/movies/filters/byCategory/?cat=${props.category}`;
+    const url = `http://43.204.238.53/api/movies/filters/byCategory/?cat=${props.category}`;
     const res = await fetch(url);
     const data = await res.json();
     

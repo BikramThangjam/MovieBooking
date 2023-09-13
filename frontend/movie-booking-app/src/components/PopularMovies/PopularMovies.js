@@ -20,7 +20,7 @@ const PopularMovies = (props) => {
     const locTxt = `${filters.location ? "&city=" + filters.location : ""}`;
     const ratingTxt = `${filters.rating ? "&rating=" + filters.rating : ""}`
 
-    const url = `http://127.0.0.1:8000/api/movies/filters/?${searchTxt}${genreTxt}${langTxt}${locTxt}${ratingTxt}&page=${currentPage}`;
+    const url = `http://43.204.238.53/api/movies/filters/?${searchTxt}${genreTxt}${langTxt}${locTxt}${ratingTxt}&page=${currentPage}`;
     const res = await fetch(url);
     // console.log("response ", res)
 
