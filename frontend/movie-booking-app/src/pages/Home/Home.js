@@ -69,11 +69,11 @@ const Home = () => {
                 </div>                   
             </div>
 
-            <div className="row p-0 m-0">
+            <div className="row m-0 movie--list">
                 <div className="col-2 filters p-0 m-0">
                     <Filter />         
                 </div>
-                <div className="col p-0">                   
+                <div className="col-10 px-4">                   
                     <div className="">
                         <PopularMovies searchVal={searchVal} filters={filters}/>
                     </div>
