@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithToken } from "../../../API/Interceptor";
 import {RotatingLines} from "react-loader-spinner";
+import { APIURL } from "../../../API/utils";
 
 const UpdateSeat = () => {
   // Define state variables to store movie data
@@ -30,7 +31,7 @@ const UpdateSeat = () => {
     // Starting the initial laoding
     setIsLoading(true);
 
-    const apiUrl = `http://127.0.0.1:8000/api/seats/${seatId}/`
+    const apiUrl = `${APIURL}seats/${seatId}/`
     const headers = {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json',
@@ -83,7 +84,7 @@ const UpdateSeat = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const apiUrl = ` http://127.0.0.1:8000/api/seat/update/${seatId}/`; 
+    const apiUrl = ` ${APIURL}seat/update/${seatId}/`; 
     const headers = {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json',

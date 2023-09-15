@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchWithToken } from "../../../API/Interceptor";
+import { APIURL } from "../../../API/utils";
 
 const AddMovie = () => {
     const [token, setToken] = useState();
@@ -42,7 +43,7 @@ const AddMovie = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const apiUrl = 'http://127.0.0.1:8000/api/movies/add/'; 
+        const apiUrl = `${APIURL}movies/add/`; 
         const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',

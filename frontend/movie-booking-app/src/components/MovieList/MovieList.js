@@ -7,6 +7,7 @@ import {
   BsFillArrowLeftCircleFill,
   BsFillArrowRightCircleFill,
 } from "react-icons/bs";
+import { APIURL } from "../API/utils";
 
 const MovieList = (props) => {
   const [movies, setMovies] = useState([]);
@@ -28,7 +29,7 @@ const MovieList = (props) => {
 };
 
   const getMoviesReq = async () => {
-    const url = `http://127.0.0.1:8000/api/movies/filters/byCategory/?cat=${props.category}`;
+    const url = `${APIURL}movies/filters/byCategory/?cat=${props.category}`;
     const res = await fetch(url);
     const data = await res.json();
     

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Signup.css"
 import {Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { APIURL } from "../../components/API/utils";
 
 
 const SignupSchema = Yup.object().shape({
@@ -67,7 +68,7 @@ const Signup = ()=>{
             // Setting isSubmitting to true to indicate the submission is starting
             setSubmitting(true);
 
-            const response = await fetch('http://127.0.0.1:8000/api/users/signup/', {
+            const response = await fetch(`${APIURL}users/signup/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithToken } from "../../../API/Interceptor";
+import { APIURL } from "../../../API/utils";
 
 const DeleteTheater = () => {
   // Define state variables to store movie data
@@ -33,7 +34,7 @@ const DeleteTheater = () => {
       try{
            // Send a request to your backend to fetch movie name suggestions based on 'text'
         // Fetching all the movies having similar title
-        const res = await fetch(`http://127.0.0.1:8000/api/theaters/byName/?name=${text}`)
+        const res = await fetch(`${APIURL}theaters/byName/?name=${text}`)
         const data = await res.json()
         
         if (res.ok){
@@ -63,7 +64,7 @@ const DeleteTheater = () => {
 
   const handleDelete = async () => {
     // console.log("handleDelete function is executing..");
-    const deleteApiUrl = `http://127.0.0.1:8000/api/theater/delete/${selectedSuggestion.id}/`;
+    const deleteApiUrl = `${APIURL}theater/delete/${selectedSuggestion.id}/`;
     const headers = {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -95,7 +96,7 @@ const DeleteTheater = () => {
 
   const handleConfirmDelete = async () => {
     console.log("Delete theater button clicked..")
-    const getTheaterUrl = `http://127.0.0.1:8000/api/theater/get/${selectedSuggestion.id}/`;
+    const getTheaterUrl = `${APIURL}theater/get/${selectedSuggestion.id}/`;
     const headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

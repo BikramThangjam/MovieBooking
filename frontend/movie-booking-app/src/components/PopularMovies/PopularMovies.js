@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import PopularMovie from "./PopularMovie/PopularMovie";
+import { APIURL } from "../API/utils";
 
 const PopularMovies = (props) => {
   const [movies, setMovies] = useState([]);
@@ -20,7 +21,7 @@ const PopularMovies = (props) => {
     const locTxt = `${filters.location ? "&city=" + filters.location : ""}`;
     const ratingTxt = `${filters.rating ? "&rating=" + filters.rating : ""}`
 
-    const url = `http://127.0.0.1:8000/api/movies/filters/?${searchTxt}${genreTxt}${langTxt}${locTxt}${ratingTxt}&page=${currentPage}`;
+    const url = `${APIURL}movies/filters/?${searchTxt}${genreTxt}${langTxt}${locTxt}${ratingTxt}&page=${currentPage}`;
     const res = await fetch(url);
     // console.log("response ", res)
 

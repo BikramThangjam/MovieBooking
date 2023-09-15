@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithToken } from "../../../API/Interceptor";
+import { APIURL } from "../../../API/utils";
 
 const DeleteUser = () => {
   
@@ -20,7 +21,7 @@ const DeleteUser = () => {
 
   const handleDelete = async () => {
     // console.log("handleDelete function is executing..");
-    const deleteApiUrl = `http://127.0.0.1:8000/api/users/deleteUser/${userId}/`;
+    const deleteApiUrl = `${APIURL}users/deleteUser/${userId}/`;
     const headers = {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -51,7 +52,7 @@ const DeleteUser = () => {
   };
 
   const handleConfirmDelete = async () => {
-    const getUserAPi = `http://127.0.0.1:8000/api/users/getUser/?username=${username}`;
+    const getUserAPi = `${APIURL}users/getUser/?username=${username}`;
     const headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

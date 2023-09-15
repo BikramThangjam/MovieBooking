@@ -2,6 +2,7 @@ import "./TheaterList.css";
 import { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import MyContext from "../../MyContext";
+import { APIURL } from "../API/utils";
 
 const TheaterList = () => {
   const { movie_id } = useParams();
@@ -12,7 +13,7 @@ const TheaterList = () => {
   useEffect(() => {
     const fetchTheaters = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/theaters/${movie_id}/`);
+        const response = await fetch(`${APIURL}theaters/${movie_id}/`);
         const data = await response.json()
         if(response.ok){
             setTheaters(data);

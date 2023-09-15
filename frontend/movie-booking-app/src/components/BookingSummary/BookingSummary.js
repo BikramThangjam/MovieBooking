@@ -3,6 +3,7 @@ import "./BookingSummary.css";
 import MyContext from "../../MyContext";
 import { fetchWithToken } from "../API/Interceptor";
 import { useNavigate } from "react-router-dom";
+import { APIURL } from "../API/utils";
 
 const BookingSummary = () => {
     const { summary } = useContext(MyContext);
@@ -29,7 +30,7 @@ const BookingSummary = () => {
         })
         
         if(data){
-            const apiUrl = `http://127.0.0.1:8000/api/booking/add/`; 
+            const apiUrl = `${APIURL}booking/add/`; 
             const headers = {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchWithToken } from '../../../API/Interceptor';
+import { APIURL } from '../../../API/utils';
 
 const AddSeat = () => {
  
@@ -30,7 +31,7 @@ const AddSeat = () => {
     const handleAddSeat = async (e) => {
         e.preventDefault();
         // console.log(formData);
-        const apiUrl = 'http://127.0.0.1:8000/api/seat/add/'; 
+        const apiUrl = `${APIURL}seat/add/`; 
         const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchWithToken } from "../../../API/Interceptor";
 import {RotatingLines} from "react-loader-spinner";
 import "./UpdateMovie.css";
+import { APIURL } from "../../../API/utils";
 const UpdateMovie = () => {
   // Define state variables to store movie data
   const [searchText, setSearchText] = useState('');
@@ -38,7 +39,7 @@ const UpdateMovie = () => {
       try{
            // Send a request to your backend to fetch movie name suggestions based on 'text'
         // Fetching all the movies having similar title
-        const res = await fetch(`http://127.0.0.1:8000/api/movies/filters/byTitle/?title=${text}`)
+        const res = await fetch(`${APIURL}movies/filters/byTitle/?title=${text}`)
         const data = await res.json()
         
         if (res.ok){
@@ -65,7 +66,7 @@ const UpdateMovie = () => {
     // Starting the initial laoding
     setIsLoading(true); 
     // Fetching details of a specific movie
-    const apiUrl = `http://127.0.0.1:8000/api/movies/byTitle/?title=${selectedSuggestion}`
+    const apiUrl = `${APIURL}movies/byTitle/?title=${selectedSuggestion}`
     try {
         const response = await fetch(apiUrl)  
         const data = await response.json();    
@@ -108,7 +109,7 @@ const handleGenreChange = (e) => {
     e.preventDefault();
     // console.log(movieData)
 
-    const apiUrl = `http://127.0.0.1:8000/api/movies/update/${movieId}/`; 
+    const apiUrl = `${APIURL}movies/update/${movieId}/`; 
     const headers = {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json',

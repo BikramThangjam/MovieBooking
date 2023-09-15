@@ -3,6 +3,7 @@ import "./BookingList.css";
 import Booking from "./Booking/Booking";
 import { fetchWithToken } from "../API/Interceptor";
 import {RotatingLines} from "react-loader-spinner";
+import { APIURL } from "../API/utils";
 
 const BookingList = () => {
     const [bookingList, setBookingList] = useState([]);
@@ -14,7 +15,7 @@ const BookingList = () => {
     });
 
     const fetchBookingList = async (token) => {
-        const apiUrl = 'http://127.0.0.1:8000/api/booking/all/'; 
+        const apiUrl = `${APIURL}booking/all/`; 
         const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import "./SeatSelection.css";
 import { Link, useParams } from "react-router-dom";
 import MyContext from "../../MyContext";
+import { APIURL } from "../API/utils";
 
 const SeatSelection = () => {
   const { theater_id, movie_id } = useParams();
@@ -9,7 +10,7 @@ const SeatSelection = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const { summary, setSummary } = useContext(MyContext);
 
-  const url = "http://127.0.0.1:8000/api/seats/all/by_theater_movie_id/";
+  const url = `${APIURL}seats/all/by_theater_movie_id/`;
 
   const reqBody = {
     theater_id,

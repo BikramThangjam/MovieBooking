@@ -5,6 +5,7 @@ import "../../../components/ReusableProfile/ReusableProfile.css";
 import "./ChangePassword.css";
 import profileImg from "../../../images/profile-icon.png";
 import bgImgURL from "../../../images/profile-bg-1.jpg";
+import { APIURL } from "../../../components/API/utils";
 
 const ChangePassword = () => {
   const [token, setToken] = useState();
@@ -40,7 +41,7 @@ const ChangePassword = () => {
     e.preventDefault();
     if (credential.password === credential.confirmPassword) {
       setPasswordsMatch(true);
-      const apiUrl = "http://127.0.0.1:8000/api/users/profile/update/";
+      const apiUrl = `${APIURL}users/profile/update/`;
       const headers = {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",

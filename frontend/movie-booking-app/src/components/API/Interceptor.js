@@ -1,3 +1,4 @@
+import { APIURL } from "./utils";
 
 
 const fetchWithToken = async(url, options={})=> {
@@ -17,7 +18,7 @@ const fetchWithToken = async(url, options={})=> {
         const refreshToken = localStorage.getItem('refresh');
         if (refreshToken){
             // Fetch new access token using the refresh token
-            const refreshResponse = await fetch('http://127.0.0.1:8000/api/refresh/',{
+            const refreshResponse = await fetch(`${APIURL}refresh/`,{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithToken } from "../../../API/Interceptor";
 import {RotatingLines} from "react-loader-spinner";
+import { APIURL } from "../../../API/utils";
 
 const UpdateUser = () => {
   // Define state variables to store movie data
@@ -31,7 +32,7 @@ const UpdateUser = () => {
     // Starting the initial laoding
     setIsLoading(true);
 
-    const apiUrl = `http://127.0.0.1:8000/api/users/getUser/?username=${username}`;
+    const apiUrl = `${APIURL}users/getUser/?username=${username}`;
     const headers = {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json',
@@ -100,7 +101,7 @@ const IsAdminHandleChange = (e)=>{
  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const apiUrl = ` http://127.0.0.1:8000/api/users/updateUser/${userData.id}/`; 
+    const apiUrl = ` ${APIURL}users/updateUser/${userData.id}/`; 
     const headers = {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json',

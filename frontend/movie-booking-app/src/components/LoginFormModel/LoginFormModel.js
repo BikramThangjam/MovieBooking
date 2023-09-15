@@ -5,6 +5,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import MyContext from "../../MyContext";
 import "../../pages/Login/Login.css";
+import { APIURL } from "../API/utils";
 
 const LoginSchema = Yup.object().shape({
     username: Yup.string()
@@ -42,7 +43,7 @@ const LoginFormModel = ({buttonRef}) => {
             // Setting isSubmitting to true to indicate the submission is starting
             setSubmitting(true);
 
-            const response = await fetch("http://127.0.0.1:8000/api/auth/login/", {
+            const response = await fetch(`${APIURL}auth/login/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

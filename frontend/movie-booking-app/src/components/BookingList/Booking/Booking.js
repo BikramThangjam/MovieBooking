@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchWithToken } from "../../API/Interceptor";
+import { APIURL } from "../../API/utils";
 
 const Booking = (props) => {
   const {bookingData, setShowSuccess, setResponseData, removeCanceledBooking} = props;
@@ -43,7 +44,7 @@ const Booking = (props) => {
   }
 
   const handleCancelBooking = async (booking_id)=>{
-    const apiUrl = `http://127.0.0.1:8000/api/booking/delete/${booking_id}/`; 
+    const apiUrl = `${APIURL}booking/delete/${booking_id}/`; 
     const headers = {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json',

@@ -5,6 +5,7 @@ import { fetchWithToken } from "../../../components/API/Interceptor";
 import profileImg from "../../../images/profile-icon.png";
 // const bgImgURL = "https://images.pexels.com/photos/354939/pexels-photo-354939.jpeg?auto=compress&cs=tinysrgb&w=600"
 import bgImgURL from "../../../images/profile-bg-1.jpg";
+import { APIURL } from "../../../components/API/utils";
 
 
 
@@ -31,7 +32,7 @@ const UpdateProfile = () => {
       }, []);
 
     const fetchUserDetail = async (token) => {
-        const apiUrl = 'http://127.0.0.1:8000/api/users/profile/'; 
+        const apiUrl = `${APIURL}users/profile/`; 
         // console.log("token--",token)
         const headers = {
         'Authorization': `Bearer ${token}`,
@@ -67,7 +68,7 @@ const UpdateProfile = () => {
     }
     const handleSubmit = async (e)=>{
         e.preventDefault()
-        const apiUrl = "http://127.0.0.1:8000/api/users/profile/update/"
+        const apiUrl = `${APIURL}users/profile/update/`
         const headers = {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',

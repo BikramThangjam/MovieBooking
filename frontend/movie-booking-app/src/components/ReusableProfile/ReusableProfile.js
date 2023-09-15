@@ -7,6 +7,7 @@ import profileImg from "../..//images/profile-icon.png";
 // const bgImgURL = "https://images.pexels.com/photos/354939/pexels-photo-354939.jpeg?auto=compress&cs=tinysrgb&w=600"
 import bgImgURL from "../../images/profile-bg-1.jpg";
 import { RotatingLines } from "react-loader-spinner";
+import { APIURL } from "../API/utils";
 
 
 
@@ -22,7 +23,7 @@ const ReusableProfile = () => {
     });
 
     const fetchUserDetail = async (token) => {
-        const apiUrl = 'http://127.0.0.1:8000/api/users/profile/'; 
+        const apiUrl = `${APIURL}users/profile/`; 
         // console.log("token--",token)
         const headers = {
         'Authorization': `Bearer ${token}`,
@@ -47,7 +48,7 @@ const ReusableProfile = () => {
     }
 
     const onDeleteHandler = async(e) => {
-        const apiUrl = 'http://127.0.0.1:8000/api/users/profile/delete/'; 
+        const apiUrl = `${APIURL}users/profile/delete/`; 
         const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { APIURL } from '../../../API/utils';
 
 
 const CreateUser = () => {
@@ -45,7 +46,7 @@ const CreateUser = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const apiUrl = 'http://127.0.0.1:8000/api/users/signup/'; 
+        const apiUrl = `${APIURL}users/signup/`; 
         const options = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

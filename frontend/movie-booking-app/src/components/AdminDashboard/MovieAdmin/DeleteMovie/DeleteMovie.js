@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithToken } from "../../../API/Interceptor";
+import { APIURL } from "../../../API/utils";
 
 const DeleteMovie = () => {
   // Define state variables to store movie data
@@ -27,7 +28,7 @@ const DeleteMovie = () => {
       try{
            // Send a request to your backend to fetch movie name suggestions based on 'text'
            // Fetching all the movies having similar title
-        const res = await fetch(`http://127.0.0.1:8000/api/movies/filters/byTitle/?title=${text}`)
+        const res = await fetch(`${APIURL}movies/filters/byTitle/?title=${text}`)
         const data = await res.json()
         
         if (res.ok){

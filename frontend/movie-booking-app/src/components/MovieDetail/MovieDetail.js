@@ -5,6 +5,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import MyContext from "../../MyContext";
 import Footer from "../Footer/Footer";
+import { APIURL } from "../API/utils";
 const MovieDetail = () => {
     const [movieDetail, setMovieDetail] = useState()
     const { movie_id } = useParams()
@@ -16,7 +17,7 @@ const MovieDetail = () => {
     }, [])
 
     const getDetails = async () => {
-        const res = await fetch(`http://127.0.0.1:8000/api/movies/${movie_id}/`)
+        const res = await fetch(`${APIURL}movies/${movie_id}/`)
         const data = await res.json()
         setMovieDetail(data)
     }

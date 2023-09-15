@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { fetchWithToken } from "../../../API/Interceptor";
 import {RotatingLines} from "react-loader-spinner";
+import { APIURL } from "../../../API/utils";
 
 const UpdateTheater = () =>{
       // Define state variables to store movie data
@@ -42,7 +43,7 @@ const UpdateTheater = () =>{
       try{
            // Send a request to your backend to fetch movie name suggestions based on 'text'
         // Fetching all the movies having similar title
-        const res = await fetch(`http://127.0.0.1:8000/api/theaters/byName/?name=${text}`)
+        const res = await fetch(`${APIURL}theaters/byName/?name=${text}`)
         const data = await res.json()
         
         if (res.ok){
@@ -74,7 +75,7 @@ const UpdateTheater = () =>{
     // Starting the initial laoding
     setIsLoading(true);
 
-    const apiUrl = `http://127.0.0.1:8000/api/theater/get/${selectedSuggestion.id}/`
+    const apiUrl = `${APIURL}theater/get/${selectedSuggestion.id}/`
     const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -122,7 +123,7 @@ const formatMovieTiming = (timing)=>{
     e.preventDefault();
     // console.log(theaterData)
 
-    const apiUrl = `http://127.0.0.1:8000/api/theater/update/${theaterId}/`; 
+    const apiUrl = `${APIURL}theater/update/${theaterId}/`; 
     const headers = {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json',
