@@ -57,6 +57,7 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST  = [
     "http://localhost:3000",  # Example: Allow requests from your frontend application
+    "http://43.204.238.53:3000"
 ]
 
 ROOT_URLCONF = 'moviebooking.urls'
