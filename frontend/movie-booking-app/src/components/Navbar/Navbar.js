@@ -13,16 +13,19 @@ const Navbar = () => {
 
     useEffect(()=>{
         let token = localStorage.getItem("access");
-        const isUserAdmin = JSON.parse(localStorage.getItem("isAdmin").toLowerCase());
-        if(isUserAdmin){
+        let isUserAdmin = localStorage.getItem("isAdmin");
+        if(isUserAdmin !== null){
+            isUserAdmin = JSON.parse(isUserAdmin.toLowerCase());
             setIsAdmin(isUserAdmin);
         }else{
             localStorage.setItem("isAdmin",isAdmin);
         }
         if(!token){
             setIsLoggedIn(false);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }else {
             setIsLoggedIn(true);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }
     }, [isLoggedIn, isAdmin] );
 
