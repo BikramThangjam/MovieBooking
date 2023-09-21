@@ -61,7 +61,10 @@ const Signup = ()=>{
             name: values.name,
             username: values.username,
             email: values.email,
-            password: values.password
+            password: values.password,
+            is_active: true,
+            is_staff: false,
+            is_superuser: false
         }
 
         try {
